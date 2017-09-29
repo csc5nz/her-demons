@@ -1,2 +1,4 @@
-# game-project-her-demons
-game-project-her-demons created by GitHub Classroom
+# Her Demons
+
+Isometric platformer adventure game/ takes place in twisted imaginary land inside protagonist’s daughter’s mind
+
