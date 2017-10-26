@@ -4,55 +4,37 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
-	public float speed = 10.0F;
+	public float speed = 2.5F;
 	public string facing;
+
+	private Vector3 pos;
+	private Transform tr;
 	private bool movingX = false;
 	private bool movingZ = false;
 
 	// Use this for initialization
 	void Start () {
-		
+		pos = transform.position;
+		tr = transform;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		float translationX = Input.GetAxis ("Vertical") * speed;
-		float translationZ = Input.GetAxis ("Horizontal") * speed;
-
-		if (translationX != 0 && translationZ == 0){
-			movingZ = false;
-			movingX = true;
+		if (Input.GetKey (KeyCode.D) && tr.position == pos) {
+			pos += 2*Vector3.back;
+		}
+		if (Input.GetKey (KeyCode.A) && tr.position == pos) {
+			pos += 2*Vector3.forward;
+		}
+		if (Input.GetKey (KeyCode.W) && tr.position == pos) {
+			pos += 2*Vector3.right;
+		}
+		if (Input.GetKey (KeyCode.S) && tr.position == pos) {
+			pos += 2*Vector3.left;
 		}
 
-		if(translationZ != 0 && translationX == 0) {
-			movingX = false;
-			movingZ = true;
-		}
-
-		if (translationX == 0 && translationZ == 0) {
-			movingX = false;
-			movingZ = false;
-		}
-
-		if (movingX == true) {
-			translationZ = 0;
-		}
-
-		if (movingZ == true) {
-			translationX = 0;
-		}
-
-		if (translationZ == 0) {
-			translationX *= Time.deltaTime;
-			transform.Translate (translationX, 0, 0);
-		}
-
-		if (translationX == 0) {
-			translationZ *= Time.deltaTime;
-			transform.Translate (0, 0, -translationZ);
-		}
-
+		transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * speed);
 
 	}
 }
