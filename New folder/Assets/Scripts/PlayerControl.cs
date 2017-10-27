@@ -31,6 +31,15 @@ public class PlayerControl : MonoBehaviour {
 
 	}
 
+	void attack ()
+	{
+		Vector3 curr = tr.position;
+		if (faceDirection == 0) {
+			
+		}
+		
+	}
+
 	public void move ()
 	{
 
