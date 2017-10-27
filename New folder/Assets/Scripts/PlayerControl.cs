@@ -28,9 +28,20 @@ public class PlayerControl : MonoBehaviour {
 	void Update () {
 		move ();
 
+
 	}
 
-	public void move(){
+	void attack ()
+	{
+		Vector3 curr = tr.position;
+		if (faceDirection == 0) {
+			
+		}
+		
+	}
+
+	public void move ()
+	{
 
 		Vector3 curr = tr.position;
 		Vector3 currback = curr + 2 * Vector3.back;
@@ -72,9 +83,18 @@ public class PlayerControl : MonoBehaviour {
 			newfaceDirection = 2;
 		}
 
+		if (Input.GetKey (KeyCode.P) && tr.position == pos) {
+			pos += 4 * Vector3.up;
+		}
+
+		if (Input.GetKey (KeyCode.O) && tr.position == pos) {
+			pos += 4 * Vector3.down;
+		}
+
 		transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * speed);
 		transform.Rotate (0, 90 * (faceDirection - newfaceDirection), 0);
 
 		faceDirection = newfaceDirection;
 	}
+
 }
