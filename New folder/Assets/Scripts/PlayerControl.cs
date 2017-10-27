@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
-	public float speed = 2.5F;
+	public float speed = 0.5F;
+	public Animator animator;
 
 	private Vector3 pos;
 	private Transform tr;
@@ -53,32 +54,32 @@ public class PlayerControl : MonoBehaviour {
 		bool leftBlocked = Physics.Linecast (curr, currforward);
 		bool forwardBlocked = Physics.Linecast (curr, currright);
 		bool backBlocked = Physics.Linecast (curr, currleft);
-		print ("right" + rightBlocked);
-		print ("left" + leftBlocked);
-		print ("forward" + forwardBlocked);
-		print ("back" + backBlocked);
 
 		if (Input.GetKey (KeyCode.D) && tr.position == pos) {
 			if (!rightBlocked) {
 				pos += 2 * Vector3.back;
+				animator.SetBool ("playermove", true);
 			}
 			newfaceDirection = 3;
 		}
 		if (Input.GetKey (KeyCode.A) && tr.position == pos) {
 			if (!leftBlocked) {
 				pos += 2 * Vector3.forward;
+				animator.SetBool ("playermove", true);
 			}
 			newfaceDirection = 1;
 		}
 		if (Input.GetKey (KeyCode.W) && tr.position == pos) {
 			if (!forwardBlocked) {
 				pos += 2 * Vector3.right;
+				animator.SetBool ("playermove", true);
 			}
 			newfaceDirection = 0;
 		}
 		if (Input.GetKey (KeyCode.S) && tr.position == pos) {
 			if (!backBlocked) {
 				pos += 2 * Vector3.left;
+				animator.SetBool ("playermove", true);
 			}
 			newfaceDirection = 2;
 		}
@@ -95,6 +96,12 @@ public class PlayerControl : MonoBehaviour {
 		transform.Rotate (0, 90 * (faceDirection - newfaceDirection), 0);
 
 		faceDirection = newfaceDirection;
+
+		if (transform.position == pos) {
+			if (!Input.GetKey (KeyCode.W) && !Input.GetKey (KeyCode.A) && !Input.GetKey (KeyCode.S) && !Input.GetKey (KeyCode.D)) {
+				animator.SetBool ("playermove", false);
+			}
+		}
 	}
 
 }
