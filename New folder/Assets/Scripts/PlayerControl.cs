@@ -12,6 +12,10 @@ public class PlayerControl : MonoBehaviour {
 	private int newfaceDirection;
 	private bool can = true;
 
+	public LayerMask blockingLayer;	
+	public float moveTime = 0.1f;	
+	private Rigidbody rigidbody;
+
 	// Use this for initialization
 	void Start () {
 		pos = transform.position;
@@ -22,36 +26,49 @@ public class PlayerControl : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		move (can);
+		move ();
 
 	}
 
-	public void elevatorup(){
-		Vector3 dest = transform.position + 4 * Vector3.up;
-		while(transform.position.y < dest.y ){
-			transform.position = Vector3.MoveTowards (transform.position, dest, Time.deltaTime * speed);
-		}
+	public void move(){
 
-	}
+		Vector3 curr = tr.position;
+		Vector3 currback = curr + 2 * Vector3.back;
+		Vector3 currforward = curr + 2 * Vector3.forward;
+		Vector3 currright = curr + 2 * Vector3.right;
+		Vector3 currleft = curr + 2 * Vector3.left;
 
-	public void elevatordown(){
-	}
+		bool rightBlocked = Physics.Linecast (curr, currback);
+		bool leftBlocked = Physics.Linecast (curr, currforward);
+		bool forwardBlocked = Physics.Linecast (curr, currright);
+		bool backBlocked = Physics.Linecast (curr, currleft);
+		print ("right" + rightBlocked);
+		print ("left" + leftBlocked);
+		print ("forward" + forwardBlocked);
+		print ("back" + backBlocked);
 
-	public void move(bool can){
 		if (Input.GetKey (KeyCode.D) && tr.position == pos) {
-			pos += 2*Vector3.back;
+			if (!rightBlocked) {
+				pos += 2 * Vector3.back;
+			}
 			newfaceDirection = 3;
 		}
 		if (Input.GetKey (KeyCode.A) && tr.position == pos) {
-			pos += 2*Vector3.forward;
+			if (!leftBlocked) {
+				pos += 2 * Vector3.forward;
+			}
 			newfaceDirection = 1;
 		}
 		if (Input.GetKey (KeyCode.W) && tr.position == pos) {
-			pos += 2*Vector3.right;
+			if (!forwardBlocked) {
+				pos += 2 * Vector3.right;
+			}
 			newfaceDirection = 0;
 		}
 		if (Input.GetKey (KeyCode.S) && tr.position == pos) {
-			pos += 2*Vector3.left;
+			if (!backBlocked) {
+				pos += 2 * Vector3.left;
+			}
 			newfaceDirection = 2;
 		}
 
