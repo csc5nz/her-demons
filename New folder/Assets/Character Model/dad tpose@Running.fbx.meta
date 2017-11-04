@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: bc0bcb1fcb449544294e17b4c4306011
-timeCreated: 1509125952
+guid: 7c3e0d5df46e8ae4b867143c6704c54d
+timeCreated: 1509152079
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -60,7 +60,7 @@ ModelImporter:
     400050: mixamorig:Spine2
     400052: unamed
     4300000: unamed
-    7400000: Unarmed Idle 01
+    7400000: Running
     9500000: //RootNode
     13700000: unamed
   materials:
@@ -88,10 +88,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Unarmed Idle 01
+      name: Running
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 348
+      lastFrame: 21
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
