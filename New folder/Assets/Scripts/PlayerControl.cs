@@ -13,15 +13,12 @@ public class PlayerControl : MonoBehaviour {
 	private Transform tr;
 	private int faceDirection; 
 	private int newfaceDirection;
-	private bool onstair;
 
 	public LayerMask blockingLayer;	
 	private Rigidbody rigidbody;
-	private bool walk = true;
 
 	// Use this for initialization
 	void Start () {
-		onstair = false;
 		pos = transform.position;
 		pos2 = pos;
 		tr = transform;
@@ -59,6 +56,12 @@ public class PlayerControl : MonoBehaviour {
 		bool leftBlocked = Physics.Linecast (curr, currforward, out hitObjectLeft);
 		bool forwardBlocked = Physics.Linecast (curr, currright, out hitObjectForward);
 		bool backBlocked = Physics.Linecast (curr, currleft, out hitObjectBack);
+
+		if (leftBlocked && hitObjectLeft.collider.tag == "lever") {
+			if (Input.GetKeyDown (KeyCode.E)) {
+				hitObjectLeft.collider.gameObject.GetComponent <Lever> ().activated = true;
+			}
+		}
 
 		if (Input.GetKey (KeyCode.D) && tr.position == pos2) { // moving right
 			if (rightBlocked && hitObjectRight.collider.tag == "stair") {

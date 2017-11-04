@@ -6,6 +6,7 @@ TagManager:
   tags:
   - stair
   - stairdown
+  - lever
   layers:
   - Default
   - TransparentFX
