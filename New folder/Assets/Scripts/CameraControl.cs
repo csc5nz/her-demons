@@ -5,9 +5,11 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour {
 
 	public GameObject player;
+
 	public float cameraX = -75.0f;
 	public float cameraY = 75.0f;
 	public float cameraZ = -75.0f;
+
 	// Use this for initialization
 	void Start () {
 	}

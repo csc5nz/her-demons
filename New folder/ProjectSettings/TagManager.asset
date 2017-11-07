@@ -9,6 +9,7 @@ TagManager:
   - lever
   - elevatordown
   - elevatorup
+  - floor
   layers:
   - Default
   - TransparentFX

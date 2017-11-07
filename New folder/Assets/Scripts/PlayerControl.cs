@@ -127,7 +127,7 @@ public class PlayerControl : MonoBehaviour {
 					pos2 = pos + 1* Vector3.down + 1 * Vector3.back;
 				}
 			}
-			if (!rightBlocked) {
+			if (!rightBlocked || hitObjectRight.collider.tag == "floor") {
 				pos += 2 * Vector3.back;
 				pos2 = pos;
 			}
@@ -162,7 +162,7 @@ public class PlayerControl : MonoBehaviour {
 					pos2 = pos + 1* Vector3.down + 1 * Vector3.forward;
 				}
 			}
-			if (!leftBlocked) {
+			if (!leftBlocked || hitObjectLeft.collider.tag == "floor") {
 				pos += 2 * Vector3.forward;
 				pos2 = pos;
 			}
@@ -197,7 +197,7 @@ public class PlayerControl : MonoBehaviour {
 					pos2 = pos + 1* Vector3.down + 1 * Vector3.right;
 				}
 			}
-			if (!forwardBlocked) {
+			if (!forwardBlocked || hitObjectForward.collider.tag == "floor") {
 				pos += 2 * Vector3.right;
 				pos2 = pos;
 			}
@@ -232,7 +232,7 @@ public class PlayerControl : MonoBehaviour {
 					pos2 = pos + 1* Vector3.down + 1 * Vector3.left;
 				}
 			}
-			if (!backBlocked) {
+			if (!backBlocked || hitObjectBack.collider.tag == "floor") {
 				pos += 2 * Vector3.left;
 				pos2 = pos;
 			}
