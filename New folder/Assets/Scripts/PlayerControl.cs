@@ -16,7 +16,6 @@ public class PlayerControl : MonoBehaviour {
 	private int newfaceDirection;
 
 	public LayerMask blockingLayer;	
-	private Rigidbody rigidbody;
 
 	// Use this for initialization
 	void Start () {
