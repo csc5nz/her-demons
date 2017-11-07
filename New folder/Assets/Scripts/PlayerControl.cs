@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
-	public float walkspeed = 2.5F;
-	public float runspeed = 5F;
+	public float walkspeed = 1.8F;
+	public float runspeed = 6F;
 	public Animator animator;
+	public bool stop;
 
 	private Vector3 pos;
 	private Vector3 pos2;
@@ -24,6 +25,7 @@ public class PlayerControl : MonoBehaviour {
 		tr = transform;
 		faceDirection = 0;
 		newfaceDirection = 0;
+		stop = false;
 	}
 
 	// Update is called once per frame
@@ -57,9 +59,42 @@ public class PlayerControl : MonoBehaviour {
 		bool forwardBlocked = Physics.Linecast (curr, currright, out hitObjectForward);
 		bool backBlocked = Physics.Linecast (curr, currleft, out hitObjectBack);
 
-		if (leftBlocked && hitObjectLeft.collider.tag == "lever") {
+		if (leftBlocked && hitObjectLeft.collider.tag == "lever") { // lever activate
 			if (Input.GetKeyDown (KeyCode.E)) {
 				hitObjectLeft.collider.gameObject.GetComponent <Lever> ().activated = true;
+			}
+		}
+		if (rightBlocked && hitObjectRight.collider.tag == "lever") { // lever activate
+			if (Input.GetKeyDown (KeyCode.E)) {
+				hitObjectRight.collider.gameObject.GetComponent <Lever> ().activated = true;
+			}
+		}
+		if (backBlocked && hitObjectBack.collider.tag == "lever") { // lever activate
+			if (Input.GetKeyDown (KeyCode.E)) {
+				hitObjectBack.collider.gameObject.GetComponent <Lever> ().activated = true;
+			}
+		}
+		if (forwardBlocked && hitObjectForward.collider.tag == "lever") { // lever activate
+			if (Input.GetKeyDown (KeyCode.E)) {
+				hitObjectForward.collider.gameObject.GetComponent <Lever> ().activated = true;
+			}
+		}
+
+		if (rightBlocked && hitObjectRight.collider.tag == "elevatordown"){ 
+			if (Input.GetKeyDown (KeyCode.E)) {
+				pos += 4 * Vector3.down;
+				pos2 = pos;
+				hitObjectRight.collider.gameObject.GetComponent <Elevator> ().activated = true;
+				stop = true;
+			}
+		}
+
+		if (rightBlocked && hitObjectRight.collider.tag == "elevatorup"){ 
+			if (Input.GetKeyDown (KeyCode.E)) {
+				pos += 4 * Vector3.up;
+				pos2 = pos;
+				hitObjectRight.collider.gameObject.GetComponent <Elevator> ().activated = true;
+				stop = true;
 			}
 		}
 
@@ -217,10 +252,14 @@ public class PlayerControl : MonoBehaviour {
 		moveNormal();
 
 		transform.Rotate (0, 90 * (faceDirection - newfaceDirection), 0); // rotate to face the correct direction
-
 		faceDirection = newfaceDirection;
 
+		if (stop == true) {
+			animator.SetInteger ("playermove", 0);
+		}
+
 		if (transform.position == pos2) { // if the character reaches destination, start idle animation
+			stop = false;
 			if (!Input.GetKey (KeyCode.W) && !Input.GetKey (KeyCode.A) && !Input.GetKey (KeyCode.S) && !Input.GetKey (KeyCode.D)) {
 				animator.SetInteger ("playermove", 0);
 			}
@@ -228,7 +267,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	public void moveNormal () {
-		if (Input.GetKey (KeyCode.LeftShift)) { // running
+		if (Input.GetKey (KeyCode.LeftShift) && stop == false) { // running
 			animator.SetInteger ("playermove", 2); // running animation
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * runspeed);
 		} else { // walking
