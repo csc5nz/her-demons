@@ -23,12 +23,13 @@ public class ArcherController : MonoBehaviour {
 		float distance = Vector3.Distance(playerpos,enemypos);
 
 		RaycastHit hit;
-		if (playerpos.y == enemypos.y && distance <= alertdistance) {
+		if (playerpos.y == enemypos.y && distance <= alertdistance) { 
 			animator.SetInteger ("alert", 1);
 		} else {
 			animator.SetInteger ("alert", 0);
 		}
-		if (playerpos.y == enemypos.y && distance <= 20.0f) { //must be from same level to recognize player and distance between enemy and player must be less than 10 tiles away
+
+		if (playerpos.y == enemypos.y && distance <= alertdistance) { //must be from same level to recognize player and distance between enemy and player must be less than 10 tiles away
 			if (playerpos.x == enemypos.x) {
 				if (playerpos.z > enemypos.z) { //player at left
 					bool blocked = Physics.Linecast (enemypos, playerpos, out hit, 1 << 8);
