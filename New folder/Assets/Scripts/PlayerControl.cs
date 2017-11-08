@@ -79,7 +79,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 
-		if (rightBlocked && hitObjectRight.collider.tag == "elevatordown"){ 
+		if (rightBlocked && hitObjectRight.collider.tag == "elevatordown"){ //elevator activate
 			if (Input.GetKeyDown (KeyCode.E)) {
 				pos += 4 * Vector3.down;
 				pos2 = pos;
@@ -88,7 +88,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 
-		if (rightBlocked && hitObjectRight.collider.tag == "elevatorup"){ 
+		if (rightBlocked && hitObjectRight.collider.tag == "elevatorup"){ //elevator activate
 			if (Input.GetKeyDown (KeyCode.E)) {
 				pos += 4 * Vector3.up;
 				pos2 = pos;
