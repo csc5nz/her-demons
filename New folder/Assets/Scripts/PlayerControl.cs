@@ -8,6 +8,7 @@ public class PlayerControl : MonoBehaviour {
 	public float runspeed = 6F;
 	public Animator animator;
 	public bool stop;
+	public int health = 100;
 
 	private Vector3 pos;
 	private Vector3 pos2;
