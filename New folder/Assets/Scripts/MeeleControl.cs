@@ -8,12 +8,15 @@ public class MeeleControl : MonoBehaviour {
 	public float runspeed = 6F;
 	//public Animator animator;
 	public bool stop;
+	public float chaseDist;
 
 	private Vector3 pos;
 	private Vector3 pos2;
+	private Vector3 home;
 	private Transform tr;
 	private int faceDirection; 
 	private int newfaceDirection;
+
 
 	public LayerMask blockingLayer;	
 
@@ -27,10 +30,17 @@ public class MeeleControl : MonoBehaviour {
 	private float elapsed = 0.0f;
 	private Vector3 navDirection;
 
+	//Lookoout
+	public float fieldOfView;
+	public float goHomeBufferDistance;
+	public float gridDist;
+	public Transform navHome;
+
 	// Use this for initialization
 	void Start () {
 		pos = transform.position;
 		pos2 = pos;
+		home = pos;
 		tr = transform;
 		faceDirection = 0;
 		newfaceDirection = 0;
@@ -43,35 +53,34 @@ public class MeeleControl : MonoBehaviour {
 		elapsed = 0.0f;
 
 
+
 	}
 
 	// Update is called once per frame
-	void Update () {
-		//move ();
-		//walk(2);
+	void Update ()
+	{
 
+		
 
 		//navMesh
 		// Update the way to the goal every second.
 		elapsed += Time.deltaTime;
 		if (elapsed > 1.0f) {
 			elapsed -= 1.0f;
-			UnityEngine.AI.NavMesh.CalculatePath(transform.position, navTarget.position, UnityEngine.AI.NavMesh.AllAreas, navPath);
+			UnityEngine.AI.NavMesh.CalculatePath (transform.position, navTarget.position, UnityEngine.AI.NavMesh.AllAreas, navPath);
 		}
-		for (int i = 0; i < navPath.corners.Length-1; i++)
-			Debug.DrawLine(navPath.corners[i], navPath.corners[i+1], Color.red);		
-		navDirection = navPath.corners[1];
-		print("navDirection: " + navDirection);
+		for (int i = 0; i < navPath.corners.Length - 1; i++)
+			Debug.DrawLine (navPath.corners [i], navPath.corners [i + 1], Color.red);		
 
-		chase();
-
+			navDirection = navPath.corners [1];
+		//print("navDirection: " + navDirection);
+		float dist = Vector3.Distance (target.transform.position, home);
+		if (dist < chaseDist) {
+			chase ();
+		}
 
 	}
 
-	public void move3 ()
-	{
-		
-	}
 
 	void attack ()
 	{
@@ -80,6 +89,7 @@ public class MeeleControl : MonoBehaviour {
 			
 		}	
 	}
+
 
 
 
@@ -103,6 +113,7 @@ public class MeeleControl : MonoBehaviour {
 			}
 		}
 	}
+
 
 
 
@@ -344,5 +355,7 @@ public class MeeleControl : MonoBehaviour {
 			pos = pos2;
 		}
 	}
+
+
 
 }
