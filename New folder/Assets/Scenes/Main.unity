@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -107,7 +107,7 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 2be8274ac4d0a9f47a0001ab92b4d5ea, type: 2}
 --- !u!1 &2637532
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,6 +225,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 202ccbdf12e93f84983b77765f5c60e4, type: 2}
+    - target: {fileID: 100000, guid: 13b63acafea40554793c6a8922273075, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 13b63acafea40554793c6a8922273075, type: 3}
   m_IsPrefabParent: 0
@@ -316,6 +320,14 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 202ccbdf12e93f84983b77765f5c60e4, type: 2}
+    - target: {fileID: 100002, guid: d9c5cb7b7fffdd74984dee1bc5d2dec7, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: d9c5cb7b7fffdd74984dee1bc5d2dec7, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d9c5cb7b7fffdd74984dee1bc5d2dec7, type: 3}
   m_IsPrefabParent: 0
@@ -603,6 +615,10 @@ Prefab:
     - target: {fileID: 100002, guid: 7b42fdf40b6b2d8479e304fa1bc6b88c, type: 3}
       propertyPath: m_TagString
       value: floor
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 7b42fdf40b6b2d8479e304fa1bc6b88c, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b42fdf40b6b2d8479e304fa1bc6b88c, type: 3}
@@ -2728,6 +2744,10 @@ Prefab:
       propertyPath: m_TagString
       value: stair
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 7769008ea52a90c458b458c72b4dd8e6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7769008ea52a90c458b458c72b4dd8e6, type: 3}
   m_IsPrefabParent: 0
@@ -4753,6 +4773,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 202ccbdf12e93f84983b77765f5c60e4, type: 2}
+    - target: {fileID: 100002, guid: 0a825e0345ac63a44bf6dd158b4909f2, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a825e0345ac63a44bf6dd158b4909f2, type: 3}
   m_IsPrefabParent: 0
@@ -4905,6 +4929,10 @@ Prefab:
       propertyPath: m_TagString
       value: floor
       objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: df0d57be9f166c6448a1f6d3099ed5e5, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df0d57be9f166c6448a1f6d3099ed5e5, type: 3}
   m_IsPrefabParent: 0
@@ -4970,6 +4998,10 @@ Prefab:
     - target: {fileID: 100002, guid: 5069330252ec07c4cbed825a9c7ce0be, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 5069330252ec07c4cbed825a9c7ce0be, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5069330252ec07c4cbed825a9c7ce0be, type: 3}
@@ -5811,7 +5843,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 63f626c4a77c79c4e91d13e72ab84818, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 63f626c4a77c79c4e91d13e72ab84818, type: 3}
       propertyPath: m_TagString
