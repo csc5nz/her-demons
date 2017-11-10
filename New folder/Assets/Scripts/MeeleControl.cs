@@ -6,7 +6,7 @@ public class MeeleControl : MonoBehaviour {
 
 	public float walkspeed = 1.8F;
 	public float runspeed = 6F;
-	//public Animator animator;
+	public Animator animator;
 	public bool stop;
 	public float chaseDist;
 
@@ -19,7 +19,6 @@ public class MeeleControl : MonoBehaviour {
 
 
 	public LayerMask blockingLayer;	
-
 
 	public int direction;
 	public GameObject target;
@@ -52,16 +51,11 @@ public class MeeleControl : MonoBehaviour {
 		navPath = new UnityEngine.AI.NavMeshPath();
 		elapsed = 0.0f;
 
-
-
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
-
-		
-
 		//navMesh
 		// Update the way to the goal every second.
 		elapsed += Time.deltaTime;
@@ -78,26 +72,22 @@ public class MeeleControl : MonoBehaviour {
 		if (dist < chaseDist) {
 			chase ();
 		}
-
+		if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) || ((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x )){
+			attack ();
+		}
 	}
-
 
 	void attack ()
 	{
 		Vector3 curr = tr.position;
-		if (faceDirection == 0) {
-			
-		}	
+		print ("attack");
 	}
-
-
-
 
 	public void chase ()
 	{
 		float xDif = Mathf.Abs (navDirection.x - transform.position.x);
 		float zDif = Mathf.Abs (navDirection.z - transform.position.z);
-		print(navDirection.x+""+transform.position.x);
+		//print(navDirection.x+""+transform.position.x);
 
 		if (xDif > zDif) {
 			if (navDirection.x < transform.position.x) {
@@ -111,12 +101,9 @@ public class MeeleControl : MonoBehaviour {
 			} else if (navDirection.z > transform.position.z) {
 				move2 (2);
 			}
-		}
+		} 
 	}
-
-
-
-
+		
 	public void move2 (int direction)
 	{
 		RaycastHit hitObjectBack;
@@ -137,46 +124,6 @@ public class MeeleControl : MonoBehaviour {
 
 
 		//transform.LookAt(target.transform);
-
-
-		if (leftBlocked && hitObjectLeft.collider.tag == "lever") { // lever activate
-			if (Input.GetKeyDown (KeyCode.E)) {
-				hitObjectLeft.collider.gameObject.GetComponent <Lever> ().activated = true;
-			}
-		}
-		if (rightBlocked && hitObjectRight.collider.tag == "lever") { // lever activate
-			if (Input.GetKeyDown (KeyCode.E)) {
-				hitObjectRight.collider.gameObject.GetComponent <Lever> ().activated = true;
-			}
-		}
-		if (backBlocked && hitObjectBack.collider.tag == "lever") { // lever activate
-			if (Input.GetKeyDown (KeyCode.E)) {
-				hitObjectBack.collider.gameObject.GetComponent <Lever> ().activated = true;
-			}
-		}
-		if (forwardBlocked && hitObjectForward.collider.tag == "lever") { // lever activate
-			if (Input.GetKeyDown (KeyCode.E)) {
-				hitObjectForward.collider.gameObject.GetComponent <Lever> ().activated = true;
-			}
-		}
-
-		if (rightBlocked && hitObjectRight.collider.tag == "elevatordown"){ 
-			if (Input.GetKeyDown (KeyCode.E)) {
-				pos += 4 * Vector3.down;
-				pos2 = pos;
-				hitObjectRight.collider.gameObject.GetComponent <Elevator> ().activated = true;
-				stop = true;
-			}
-		}
-
-		if (rightBlocked && hitObjectRight.collider.tag == "elevatorup"){ 
-			if (Input.GetKeyDown (KeyCode.E)) {
-				pos += 4 * Vector3.up;
-				pos2 = pos;
-				hitObjectRight.collider.gameObject.GetComponent <Elevator> ().activated = true;
-				stop = true;
-			}
-		}
 
 		if (direction == 4 && tr.position == pos2) { // moving right
 			if (rightBlocked && hitObjectRight.collider.tag == "stair") {
@@ -318,44 +265,32 @@ public class MeeleControl : MonoBehaviour {
 			}
 			newfaceDirection = 2;
 		}
-
-		if (Input.GetKey (KeyCode.P) && tr.position == pos) { //temporary vertical up
-			pos += 4 * Vector3.up;
-			pos2 = pos;
-		}
-
-		if (Input.GetKey (KeyCode.O) && tr.position == pos) { // temporary vertical down
-			pos += 4 * Vector3.down;
-			pos2 = pos;
-		}
-
+			
 		moveNormal();
 
 		transform.Rotate (0, 90 * (faceDirection - newfaceDirection), 0); // rotate to face the correct direction
 		faceDirection = newfaceDirection;
 
 		if (stop == true) {
-			//animator.SetInteger ("playermove", 0);
+			animator.SetInteger ("enemymove", 0);
 		}
 
 		if (transform.position == pos2) { // if the character reaches destination, start idle animation
 			stop = false;
-			if (!Input.GetKey (KeyCode.W) && !Input.GetKey (KeyCode.A) && !Input.GetKey (KeyCode.S) && !Input.GetKey (KeyCode.D)) {
-				//animator.SetInteger ("playermove", 0);
+			if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) || ((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x )) { 
+				animator.SetInteger ("enemymove", 0);
 			}
 		}
 	}
 
 	public void moveNormal () {
 		
-			//animator.SetInteger ("playermove", 1); // walking animation
+			animator.SetInteger ("enemymove", 1); // walking animation
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * walkspeed);
 
 		if (tr.position == pos) {
 			pos = pos2;
 		}
 	}
-
-
 
 }
