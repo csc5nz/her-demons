@@ -88,16 +88,17 @@ public class ArcherController : MonoBehaviour {
 		int dir = 0;
 
 		if (faceDirection == 0) { //bottom left
-			arrowpos += 2.4f * Vector3.left + 2.4f * Vector3.up;
+			arrowpos += 2.0f * Vector3.left + 2.4f * Vector3.up;
 			dir = 0;
+
 		} else if (faceDirection == 1) { // bottom right
-			arrowpos += 2.4f * Vector3.back + 2.4f * Vector3.up;
+			arrowpos += 2.0f * Vector3.back + 2.4f * Vector3.up;
 			dir = 1;
 		} else if (faceDirection == 2) { //top right
-			arrowpos += 2.4f * Vector3.right + 2.4f * Vector3.up;
+			arrowpos += 2.0f * Vector3.right + 2.4f * Vector3.up;
 			dir = 2;
 		} else if (faceDirection == 3) { // top left
-			arrowpos += 2.4f * Vector3.forward + 2.4f * Vector3.up;
+			arrowpos += 2.0f * Vector3.forward + 2.4f * Vector3.up;
 			dir = 3;
 		}
 

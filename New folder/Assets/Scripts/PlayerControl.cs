@@ -8,8 +8,10 @@ public class PlayerControl : MonoBehaviour {
 	public float runspeed = 6F;
 	public Animator animator;
 	public bool stop;
+	public bool dmgd;
 	public int health = 100;
 
+	private Vector3 orig;
 	private Vector3 pos;
 	private Vector3 pos2;
 	private Transform tr;
@@ -26,6 +28,7 @@ public class PlayerControl : MonoBehaviour {
 		faceDirection = 0;
 		newfaceDirection = 0;
 		stop = false;
+		dmgd = false;
 	}
 
 	// Update is called once per frame
@@ -85,7 +88,7 @@ public class PlayerControl : MonoBehaviour {
 				pos += 4 * Vector3.down;
 				pos2 = pos;
 				hitObjectRight.collider.gameObject.GetComponent <Elevator> ().activated = true;
-				stop = true;
+				stop = true; // while on elevator, player can't issue move commands
 			}
 		}
 
@@ -94,11 +97,11 @@ public class PlayerControl : MonoBehaviour {
 				pos += 4 * Vector3.up;
 				pos2 = pos;
 				hitObjectRight.collider.gameObject.GetComponent <Elevator> ().activated = true;
-				stop = true;
+				stop = true; // while on elevator, player can't issue move commands
 			}
 		}
 
-		if (Input.GetKey (KeyCode.D) && tr.position == pos2) { // moving right
+		if (Input.GetKey (KeyCode.D) && tr.position == pos2 && dmgd == false) { // moving right
 			if (rightBlocked && hitObjectRight.collider.tag == "stair") {
 				if ((tr.transform.position.y - 1) % 4 == 0) {
 					pos += 1 * Vector3.back; 
@@ -132,8 +135,9 @@ public class PlayerControl : MonoBehaviour {
 				pos2 = pos;
 			}
 			newfaceDirection = 3;
+			orig = tr.transform.position;
 		}
-		if (Input.GetKey (KeyCode.A) && tr.position == pos2) { // moving left
+		if (Input.GetKey (KeyCode.A) && tr.position == pos2 && dmgd == false) { // moving left
 			if (leftBlocked && hitObjectLeft.collider.tag == "stair") {
 				if ((tr.transform.position.y - 1) % 4 == 1) {
 					pos += 1 * Vector3.forward; 
@@ -167,8 +171,9 @@ public class PlayerControl : MonoBehaviour {
 				pos2 = pos;
 			}
 			newfaceDirection = 1;
+			orig = tr.transform.position;
 		}
-		if (Input.GetKey (KeyCode.W) && tr.position == pos2) { // moving forward
+		if (Input.GetKey (KeyCode.W) && tr.position == pos2 && dmgd == false) { // moving forward
 			if (forwardBlocked && hitObjectForward.collider.tag == "stair") {
 				if ((tr.transform.position.y - 1) % 4 == 0) {
 					pos += 1 * Vector3.right; 
@@ -202,8 +207,9 @@ public class PlayerControl : MonoBehaviour {
 				pos2 = pos;
 			}
 			newfaceDirection = 0;
+			orig = tr.transform.position;
 		}
-		if (Input.GetKey (KeyCode.S) && tr.position == pos2) { // moving back
+		if (Input.GetKey (KeyCode.S) && tr.position == pos2 && dmgd == false) { // moving back
 			if (backBlocked && hitObjectBack.collider.tag == "stair") {
 				if ((tr.transform.position.y - 1) % 4 == 0) {
 					pos += 1 * Vector3.left; 
@@ -237,6 +243,7 @@ public class PlayerControl : MonoBehaviour {
 				pos2 = pos;
 			}
 			newfaceDirection = 2;
+			orig = tr.transform.position;
 		}
 
 		if (Input.GetKey (KeyCode.P) && tr.position == pos) { //temporary vertical up
@@ -260,24 +267,47 @@ public class PlayerControl : MonoBehaviour {
 
 		if (transform.position == pos2) { // if the character reaches destination, start idle animation
 			stop = false;
+			orig = tr.transform.position;
 			if (!Input.GetKey (KeyCode.W) && !Input.GetKey (KeyCode.A) && !Input.GetKey (KeyCode.S) && !Input.GetKey (KeyCode.D)) {
 				animator.SetInteger ("playermove", 0);
-			}
+			} 
 		}
 	}
 
 	public void moveNormal () {
-		if (Input.GetKey (KeyCode.LeftShift) && stop == false) { // running
+		if (dmgd == true) {
+			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * runspeed);
+		} else if (Input.GetKey (KeyCode.LeftShift) && stop == false) { // running
 			animator.SetInteger ("playermove", 2); // running animation
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * runspeed);
 		} else { // walking
 			animator.SetInteger ("playermove", 1); // walking animation
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * walkspeed);
-		}
+		} 
 
 		if (tr.position == pos) {
 			pos = pos2;
 		}
 	}
 
+	public void damaged(int dmg, int dir, float xval, float zval){
+		stop = true;
+		dmgd = true;
+		animator.SetInteger ("playermove", 3);
+		health -= dmg;
+		if (dir == 0) {
+			if (pos2.x > orig.x) {
+				pos = orig;
+				pos2 = orig;
+			} 
+			if (orig.z < zval || orig.z > zval) {
+				pos = orig;
+				pos2 = orig;
+			}
+		}
+	}
+	//public void notDmg(){
+		//dmgd = false;
+		//animator.SetBool ("hit", false);
+	//}
 }
