@@ -35,6 +35,12 @@ public class MeeleControl : MonoBehaviour {
 	public float gridDist;
 	public Transform navHome;
 
+	//collider that occupy 2 blocks
+	public GameObject colliderPrefab;
+	private GameObject colliderNextBlock;
+	private GameObject colliderPrevBlock;	
+
+
 	// Use this for initialization
 	void Start () {
 		pos = transform.position;
@@ -50,6 +56,10 @@ public class MeeleControl : MonoBehaviour {
 		//navmesh
 		navPath = new UnityEngine.AI.NavMeshPath();
 		elapsed = 0.0f;
+
+		//collider that occupy 2 blocks
+		colliderNextBlock = Instantiate(colliderPrefab);
+		colliderPrevBlock = Instantiate(colliderPrefab);
 
 	}
 
@@ -283,13 +293,18 @@ public class MeeleControl : MonoBehaviour {
 		}
 	}
 
-	public void moveNormal () {
-		
+	public void moveNormal ()
+	{
+		if (colliderNextBlock.transform.position != pos) {
+			colliderNextBlock.transform.position = pos;
+		}
 			animator.SetInteger ("enemymove", 1); // walking animation
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * walkspeed);
+			//if (transform.position == pos)
 
 		if (tr.position == pos) {
 			pos = pos2;
+			colliderPrevBlock.transform.position = transform.position;
 		}
 	}
 

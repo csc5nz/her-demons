@@ -1524,6 +1524,7 @@ MonoBehaviour:
   goHomeBufferDistance: 0
   gridDist: 0
   navHome: {fileID: 0}
+  colliderPrefab: {fileID: 0}
 --- !u!1 &525975541
 GameObject:
   m_ObjectHideFlags: 0
@@ -4694,6 +4695,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 114380314027318388, guid: a34b445002c828541a2c2d6691075080,
+        type: 2}
+      propertyPath: colliderPrefab
+      value: 
+      objectReference: {fileID: 1353431352208560, guid: 046566f07a3eb6f41b9cae525f183199,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a34b445002c828541a2c2d6691075080, type: 2}
   m_IsPrefabParent: 0
@@ -5984,6 +5991,8 @@ MonoBehaviour:
   goHomeBufferDistance: 0
   gridDist: 0
   navHome: {fileID: 0}
+  colliderPrefab: {fileID: 1353431352208560, guid: 046566f07a3eb6f41b9cae525f183199,
+    type: 2}
 --- !u!95 &1932989588 stripped
 Animator:
   m_PrefabParentObject: {fileID: 9500000, guid: 23ef01f6a7426a44d9ac4fb4392b181a,

@@ -18,7 +18,12 @@ public class PlayerControl : MonoBehaviour {
 	private int faceDirection; 
 	private int newfaceDirection;
 
-	public LayerMask blockingLayer;	
+	public LayerMask blockingLayer;
+
+	//collider that occupy 2 blocks
+	public GameObject colliderPrefab;
+	private GameObject colliderNextBlock;
+	private GameObject colliderPrevBlock;	
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +34,11 @@ public class PlayerControl : MonoBehaviour {
 		newfaceDirection = 0;
 		stop = false;
 		dmgd = false;
+
+		//collider that occupy 2 blocks
+		colliderNextBlock = Instantiate(colliderPrefab);
+		colliderPrevBlock = Instantiate(colliderPrefab);
+
 	}
 
 	// Update is called once per frame
@@ -275,6 +285,10 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	public void moveNormal () {
+
+		if (colliderNextBlock.transform.position != pos) {
+			colliderNextBlock.transform.position = pos;
+		}
 		if (dmgd == true) {
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * runspeed);
 		} else if (Input.GetKey (KeyCode.LeftShift) && stop == false) { // running
@@ -287,6 +301,7 @@ public class PlayerControl : MonoBehaviour {
 
 		if (tr.position == pos) {
 			pos = pos2;
+			colliderPrevBlock.transform.position = transform.position;
 		}
 	}
 
