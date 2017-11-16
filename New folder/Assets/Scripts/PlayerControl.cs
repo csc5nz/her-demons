@@ -34,14 +34,72 @@ public class PlayerControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		move ();
+		if (Input.GetMouseButtonDown (0))
+			attack ();
 	}
 
 	void attack ()
 	{
+		RaycastHit hit;
+
 		Vector3 curr = tr.position;
-		if (faceDirection == 0) {
+		Vector3 currback = curr + 2 * Vector3.back;
+		Vector3 currforward = curr + 2 * Vector3.forward;
+		Vector3 currright = curr + 2 * Vector3.right;
+		Vector3 currleft = curr + 2 * Vector3.left;
+
+		bool blocked;
+
+		if (Input.mousePosition.x < Screen.width / 2 && Input.mousePosition.y > Screen.height / 2) {
+			print ("Left Attack");
+			newfaceDirection = 1;
+			blocked = Physics.Linecast (curr, currforward, out hit, 1 << 9);
+			if (blocked) {
+				print ("Hit!");
+				hit.collider.gameObject.GetComponent<MeeleControl>().getHit() ;
+			} else {
+				print ("Miss!");
+			}
+		}
+		if (Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.y > Screen.height / 2) {
+			print ("Forward Attack");
+			newfaceDirection = 4;
+			blocked = Physics.Linecast (curr, currright, out hit, 1 << 9);
+			if (blocked) {
+				print ("Hit!");
+				hit.collider.gameObject.GetComponent<MeeleControl>().getHit() ;
+			} else {
+				print ("Miss!");
+			}
+		}
+		if (Input.mousePosition.x < Screen.width / 2 && Input.mousePosition.y < Screen.height / 2) {
+			print ("Back Attack");
+			newfaceDirection = 2;
+			blocked = Physics.Linecast (curr, currleft, out hit, 1 << 9 );
+			if (blocked) {
+				print ("Hit!");
+				hit.collider.gameObject.GetComponent<MeeleControl>().getHit() ;
+			} else {
+				print ("Miss!");
+			}
+		}
+		if (Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.y < Screen.height / 2) {
+			print ("Right Attack");
+			newfaceDirection = 3;
+			blocked = Physics.Linecast (curr, currback, out hit, 1 << 9);
+			if (blocked) {
+				print ("Hit!");
+				hit.collider.gameObject.GetComponent<MeeleControl>().getHit() ;
+			} else {
+				print ("Miss!");
+			}
+		}
+
+	
 			
-		}	
+
+
+
 	}
 
 	public void move ()
