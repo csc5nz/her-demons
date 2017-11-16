@@ -6,6 +6,7 @@ public class MeeleControl : MonoBehaviour {
 
 	public float walkspeed = 1.8F;
 	public float runspeed = 6F;
+	public int hp;
 	public Animator animator;
 	public bool stop;
 	public float chaseDist;
@@ -85,12 +86,21 @@ public class MeeleControl : MonoBehaviour {
 		if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) || ((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x )){
 			attack ();
 		}
+
+		if (hp <= 0) {
+			gameObject.SetActive (false);
+		}
 	}
 
-	void attack ()
+	public void getHit() {
+		hp -= 1;
+		print (hp);
+	}
+
+	private void attack ()
 	{
 		Vector3 curr = tr.position;
-		print ("attack");
+		//print ("attack");
 	}
 
 	public void chase ()
