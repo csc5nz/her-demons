@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25000003, g: 0.24484655, b: 0.26589254, a: 1}
+  m_IndirectSpecularColor: {r: 0.25009573, g: 0.24484655, b: 0.26584128, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -109,6 +109,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    debug:
+      m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 2be8274ac4d0a9f47a0001ab92b4d5ea, type: 2}
 --- !u!1 &2637532
 GameObject:
@@ -407,6 +409,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -422,6 +425,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
@@ -1535,7 +1539,8 @@ MonoBehaviour:
   goHomeBufferDistance: 0
   gridDist: 0
   navHome: {fileID: 0}
-  colliderPrefab: {fileID: 0}
+  colliderPrefab: {fileID: 1353431352208560, guid: 046566f07a3eb6f41b9cae525f183199,
+    type: 2}
 --- !u!1 &525975541
 GameObject:
   m_ObjectHideFlags: 0
@@ -6317,6 +6322,7 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -6332,6 +6338,7 @@ MeshRenderer:
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
