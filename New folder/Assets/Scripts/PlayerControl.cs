@@ -9,6 +9,7 @@ public class PlayerControl : MonoBehaviour {
 	public Animator animator;
 	public bool stop;
 	public bool dmgd;
+	public bool attacking;
 	public int health = 100;
 	public bool canBeHit = true;
 
@@ -19,12 +20,7 @@ public class PlayerControl : MonoBehaviour {
 	private int faceDirection; 
 	private int newfaceDirection;
 
-	public LayerMask blockingLayer;
-
-	//collider that occupy 2 blocks
-	public GameObject colliderPrefab;
-	private GameObject colliderNextBlock;
-	private GameObject colliderPrevBlock;	
+	public LayerMask blockingLayer;	
 
 	// Use this for initialization
 	void Start () {
@@ -35,18 +31,19 @@ public class PlayerControl : MonoBehaviour {
 		newfaceDirection = 0;
 		stop = false;
 		dmgd = false;
-
-		//collider that occupy 2 blocks
-		colliderNextBlock = Instantiate(colliderPrefab);
-		colliderPrevBlock = Instantiate(colliderPrefab);
-
+		attacking = false;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		move ();
-		if (Input.GetMouseButtonDown (0))
+		if (attacking == false) {
+			move ();
+		}
+		
+		if (Input.GetMouseButtonDown (0) && tr.position == pos2 && attacking == false) {
 			attack ();
+		}
+
 	}
 
 	void attack ()
@@ -105,9 +102,11 @@ public class PlayerControl : MonoBehaviour {
 				print ("Miss!");
 			}
 		}
+		transform.Rotate (0, 90 * (faceDirection - newfaceDirection), 0); // rotate to face the correct direction
+		faceDirection = newfaceDirection;
 
-	
-			
+		animator.SetInteger ("playermove", 5);
+		attacking = true;
 
 
 
@@ -130,6 +129,10 @@ public class PlayerControl : MonoBehaviour {
 		bool leftBlocked = Physics.Linecast (curr, currforward, out hitObjectLeft);
 		bool forwardBlocked = Physics.Linecast (curr, currright, out hitObjectForward);
 		bool backBlocked = Physics.Linecast (curr, currleft, out hitObjectBack);
+
+		if (transform.position == pos2) { 
+			stop = false;
+		}
 
 		if (leftBlocked && hitObjectLeft.collider.tag == "lever") { // lever activate
 			if (Input.GetKeyDown (KeyCode.E)) {
@@ -170,7 +173,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetKey (KeyCode.D) && tr.position == pos2 && dmgd == false) { // moving right
+		if (Input.GetKey (KeyCode.D) && tr.position == pos2 && dmgd == false && attacking == false) { // moving right
 			if (rightBlocked && hitObjectRight.collider.tag == "stair") {
 				if ((tr.transform.position.y - 1) % 4 == 0) {
 					pos += 1 * Vector3.back; 
@@ -206,7 +209,7 @@ public class PlayerControl : MonoBehaviour {
 			newfaceDirection = 3;
 			orig = tr.transform.position;
 		}
-		if (Input.GetKey (KeyCode.A) && tr.position == pos2 && dmgd == false) { // moving left
+		if (Input.GetKey (KeyCode.A) && tr.position == pos2 && dmgd == false && attacking == false) { // moving left
 			if (leftBlocked && hitObjectLeft.collider.tag == "stair") {
 				if ((tr.transform.position.y - 1) % 4 == 1) {
 					pos += 1 * Vector3.forward; 
@@ -242,7 +245,7 @@ public class PlayerControl : MonoBehaviour {
 			newfaceDirection = 1;
 			orig = tr.transform.position;
 		}
-		if (Input.GetKey (KeyCode.W) && tr.position == pos2 && dmgd == false) { // moving forward
+		if (Input.GetKey (KeyCode.W) && tr.position == pos2 && dmgd == false && attacking == false) { // moving forward
 			if (forwardBlocked && hitObjectForward.collider.tag == "stair") {
 				if ((tr.transform.position.y - 1) % 4 == 0) {
 					pos += 1 * Vector3.right; 
@@ -278,7 +281,7 @@ public class PlayerControl : MonoBehaviour {
 			newfaceDirection = 0;
 			orig = tr.transform.position;
 		}
-		if (Input.GetKey (KeyCode.S) && tr.position == pos2 && dmgd == false) { // moving back
+		if (Input.GetKey (KeyCode.S) && tr.position == pos2 && dmgd == false && attacking == false) { // moving back
 			if (backBlocked && hitObjectBack.collider.tag == "stair") {
 				if ((tr.transform.position.y - 1) % 4 == 0) {
 					pos += 1 * Vector3.left; 
@@ -344,10 +347,6 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	public void moveNormal () {
-
-		if (colliderNextBlock.transform.position != pos) {
-			colliderNextBlock.transform.position = pos;
-		}
 		if (dmgd == true) {
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * runspeed);
 		} else if (Input.GetKey (KeyCode.LeftShift) && stop == false) { // running
@@ -360,7 +359,6 @@ public class PlayerControl : MonoBehaviour {
 
 		if (tr.position == pos) {
 			pos = pos2;
-			colliderPrevBlock.transform.position = transform.position;
 		}
 	}
 
@@ -380,6 +378,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 	}
+
 	public void damaged(int dmg){
 		stop = true;
 		dmgd = true;

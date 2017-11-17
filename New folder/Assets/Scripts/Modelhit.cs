@@ -18,6 +18,12 @@ public class Modelhit : MonoBehaviour {
 
 	public void notDmg(){
 		player.GetComponent<PlayerControl>().dmgd = false;
+		//player.GetComponent<PlayerControl>().attacking = false;
 		player.GetComponent<PlayerControl> ().animator.SetInteger ("playermove", 0);
+	}
+
+	public void stopAttacking(){
+		player.GetComponent<PlayerControl>().attacking = false;
+		player.GetComponent<PlayerControl>().animator.SetInteger ("playermove", 0);
 	}
 }
