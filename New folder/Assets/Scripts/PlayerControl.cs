@@ -64,7 +64,11 @@ public class PlayerControl : MonoBehaviour {
 			blocked = Physics.Linecast (curr, currforward, out hit, 1 << 9);
 			if (blocked) {
 				print ("Hit!");
-				hit.collider.gameObject.GetComponent<MeeleControl>().getHit() ;
+				if (hit.collider.gameObject.tag == "melee") {
+					hit.collider.gameObject.GetComponent<MeeleControl> ().getHit ();
+				} else if (hit.collider.gameObject.tag == "archer") {
+					hit.collider.gameObject.GetComponent<ArcherController> ().getHit ();
+				}
 			} else {
 				print ("Miss!");
 			}
@@ -75,7 +79,11 @@ public class PlayerControl : MonoBehaviour {
 			blocked = Physics.Linecast (curr, currright, out hit, 1 << 9);
 			if (blocked) {
 				print ("Hit!");
-				hit.collider.gameObject.GetComponent<MeeleControl>().getHit() ;
+				if (hit.collider.gameObject.tag == "melee") {
+					hit.collider.gameObject.GetComponent<MeeleControl> ().getHit ();
+				} else if (hit.collider.gameObject.tag == "archer") {
+					hit.collider.gameObject.GetComponent<ArcherController> ().getHit ();
+				}
 			} else {
 				print ("Miss!");
 			}
@@ -86,7 +94,11 @@ public class PlayerControl : MonoBehaviour {
 			blocked = Physics.Linecast (curr, currleft, out hit, 1 << 9 );
 			if (blocked) {
 				print ("Hit!");
-				hit.collider.gameObject.GetComponent<MeeleControl>().getHit() ;
+				if (hit.collider.gameObject.tag == "melee") {
+					hit.collider.gameObject.GetComponent<MeeleControl> ().getHit ();
+				} else if (hit.collider.gameObject.tag == "archer") {
+					hit.collider.gameObject.GetComponent<ArcherController> ().getHit ();
+				}
 			} else {
 				print ("Miss!");
 			}
@@ -97,7 +109,11 @@ public class PlayerControl : MonoBehaviour {
 			blocked = Physics.Linecast (curr, currback, out hit, 1 << 9);
 			if (blocked) {
 				print ("Hit!");
-				hit.collider.gameObject.GetComponent<MeeleControl>().getHit() ;
+				if (hit.collider.gameObject.tag == "melee") {
+					hit.collider.gameObject.GetComponent<MeeleControl> ().getHit ();
+				} else if (hit.collider.gameObject.tag == "archer") {
+					hit.collider.gameObject.GetComponent<ArcherController> ().getHit ();
+				}
 			} else {
 				print ("Miss!");
 			}
@@ -362,7 +378,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 	}
 
-	public void damaged(int dmg, int dir, float xval, float zval){
+	public void damaged(int dmg, int dir, float xval, float zval){ // damaged by archers
 		stop = true;
 		dmgd = true;
 		animator.SetInteger ("playermove", 3);
@@ -379,14 +395,11 @@ public class PlayerControl : MonoBehaviour {
 		}
 	}
 
-	public void damaged(int dmg){
+	public void damaged(int dmg){ // damaged by melee
 		stop = true;
 		dmgd = true;
 		animator.SetInteger ("playermove", 3);
 		health -= dmg;
 	}
-	//public void notDmg(){
-		//dmgd = false;
-		//animator.SetBool ("hit", false);
-	//}
+
 }

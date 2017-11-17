@@ -10,6 +10,7 @@ public class ArcherController : MonoBehaviour {
 	public GameObject player;
 	public GameObject playerModel;
 	public int faceDirection;
+	public int hp = 3;
 
 	private RaycastHit hit;
 	private int newfaceDirection;
@@ -81,6 +82,10 @@ public class ArcherController : MonoBehaviour {
 
 		transform.Rotate (0, 90 * (faceDirection - newfaceDirection), 0);
 		faceDirection = newfaceDirection;
+
+		if (hp <= 0) {
+			gameObject.SetActive (false);
+		}
 	}
 	
 	public void Shoot(){
@@ -112,5 +117,7 @@ public class ArcherController : MonoBehaviour {
 		arrowinstance.GetComponent<Arrow> ().direction = dir;
 	}
 
-
+	public void getHit() {
+		hp -= 1;
+	}
 }
