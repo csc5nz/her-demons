@@ -113,6 +113,9 @@ public class MeeleControl : MonoBehaviour {
 
 		if (hp <= 0) {
 			gameObject.SetActive (false);
+			Destroy(colliderNextBlock);
+			Destroy(colliderPrevBlock);
+
 		}
 	}
 
