@@ -35,6 +35,7 @@ public class MeeleControl : MonoBehaviour {
 	public float goHomeDistance;
 	public float gridDist;
 	public Transform navHome;
+	public bool dead;
 
 	//collider that occupy 2 blocks
 	public GameObject colliderPrefab;
@@ -55,6 +56,7 @@ public class MeeleControl : MonoBehaviour {
 		faceDirection = 0;
 		newfaceDirection = 0;
 		stop = false;
+		dead = false;
 
 		direction = 1;
 
@@ -92,17 +94,17 @@ public class MeeleControl : MonoBehaviour {
 
 		float dist = Vector3.Distance (playerTransform.position, transform.position);
 		float distHome = Vector3.Distance (home, transform.position);
-		if (dist <= chaseDist) {
+		if (dist <= chaseDist && dead == false) {
 			calculatePath(playerTransform.position);
 			chase ();
 		}
-		else if (dist >= goHomeDistance){
+		else if (dist >= goHomeDistance && dead == false){
 			calculatePath(home);
 			chase ();
 		}
 		if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) || 
 			((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x )){
-			if (target.GetComponent<PlayerControl> ().canBeHit) {
+			if (target.GetComponent<PlayerControl> ().canBeHit && dead == false) {
 				target.GetComponent<PlayerControl> ().canBeHit = false;
 				attack ();
 				StartCoroutine (timer ());
@@ -112,10 +114,8 @@ public class MeeleControl : MonoBehaviour {
 		}
 
 		if (hp <= 0) {
-			gameObject.SetActive (false);
-			Destroy(colliderNextBlock);
-			Destroy(colliderPrevBlock);
-
+			animator.SetInteger ("enemymove", 3);
+			dead = true;
 		}
 	}
 
@@ -127,8 +127,10 @@ public class MeeleControl : MonoBehaviour {
 	private void attack ()
 	{
 		Vector3 curr = tr.position;
+
+		//animator.SetInteger ("enemymove", 2);
 		print ("attack");
-		target.GetComponent<PlayerControl> ().damaged (20);
+		target.GetComponent<PlayerControl> ().damaged (10);
 
 
 	}
@@ -366,6 +368,13 @@ public class MeeleControl : MonoBehaviour {
 			pos = pos2;
 			colliderPrevBlock.transform.position = transform.position;
 		}
+	}
+
+	public void Death(){
+		//player.GetComponent<PlayerControl>().attacking = false;
+		this.gameObject.SetActive(false);
+		Destroy(colliderNextBlock);
+		Destroy(colliderPrevBlock);
 	}
 
 }

@@ -11,12 +11,14 @@ public class ArcherController : MonoBehaviour {
 	public GameObject playerModel;
 	public int faceDirection;
 	public int hp = 3;
+	public bool dead;
 
 	private RaycastHit hit;
 	private int newfaceDirection;
 
 	// Use this for initialization
 	void Start () {
+		dead = false;
 	}
 	
 	// Update is called once per frame
@@ -32,7 +34,7 @@ public class ArcherController : MonoBehaviour {
 			animator.SetInteger ("alert", 0);
 		}
 
-		if (playerpos.y == enemypos.y && distance <= alertdistance) { //must be from same level to recognize player and distance between enemy and player must be less than 10 tiles away
+		if (playerpos.y == enemypos.y && distance <= alertdistance && dead == false) { //must be from same level to recognize player and distance between enemy and player must be less than 10 tiles away
 			if (playerpos.x == enemypos.x && Mathf.Abs (playerpos.z - enemypos.z) > 2) {
 				if (playerpos.z > enemypos.z ) { //player at top left
 					bool blocked = Physics.Linecast (enemypos, playerpos, out hit, 1 << 8);
@@ -84,7 +86,7 @@ public class ArcherController : MonoBehaviour {
 		faceDirection = newfaceDirection;
 
 		if (hp <= 0) {
-			gameObject.SetActive (false);
+			animator.SetInteger("alert", 4);
 		}
 	}
 	
@@ -119,5 +121,10 @@ public class ArcherController : MonoBehaviour {
 
 	public void getHit() {
 		hp -= 1;
+	}
+
+	public void Death(){
+		//player.GetComponent<PlayerControl>().attacking = false;
+		this.gameObject.SetActive(false);
 	}
 }

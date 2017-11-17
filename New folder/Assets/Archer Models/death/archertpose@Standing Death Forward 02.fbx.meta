@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 6233b6425108d6d4b8c9de6589546e16
-timeCreated: 1510281545
+guid: 95a2aa308675f4244a5cfa74c24fe3cb
+timeCreated: 1510897741
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
@@ -60,7 +60,7 @@ ModelImporter:
     400050: mixamorig:Spine2
     400052: unamed
     4300000: unamed
-    7400000: Mutant Dying
+    7400000: mixamo.com
     9500000: //RootNode
     13700000: unamed
   materials:
@@ -86,42 +86,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Mutant Dying
-      takeName: mixamo.com
-      firstFrame: 0
-      lastFrame: 138
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events:
-      - time: 0.99715906
-        functionName: Death
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
