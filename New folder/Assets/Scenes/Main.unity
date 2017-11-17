@@ -1542,9 +1542,9 @@ MonoBehaviour:
     m_Bits: 0
   direction: 0
   target: {fileID: 297572645}
-  navTarget: {fileID: 297572648}
-  fieldOfView: 0
-  goHomeBufferDistance: 0
+  playerTransform: {fileID: 297572648}
+  fieldOfView: 10
+  goHomeDistance: 15
   gridDist: 0
   navHome: {fileID: 0}
   colliderPrefab: {fileID: 1353431352208560, guid: 046566f07a3eb6f41b9cae525f183199,
@@ -1734,7 +1734,7 @@ Prefab:
     - target: {fileID: 13700000, guid: 766c5754d366f16498109af51eb65cd8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 202ccbdf12e93f84983b77765f5c60e4, type: 2}
+      objectReference: {fileID: 2100000, guid: 8a1660fd52975e247b7c83056fbd108c, type: 2}
     - target: {fileID: 100000, guid: 766c5754d366f16498109af51eb65cd8, type: 3}
       propertyPath: m_Name
       value: Archer (1)
@@ -6065,9 +6065,9 @@ MonoBehaviour:
     m_Bits: 0
   direction: 0
   target: {fileID: 297572645}
-  navTarget: {fileID: 297572648}
-  fieldOfView: 0
-  goHomeBufferDistance: 0
+  playerTransform: {fileID: 297572648}
+  fieldOfView: 10
+  goHomeDistance: 15
   gridDist: 0
   navHome: {fileID: 0}
   colliderPrefab: {fileID: 1353431352208560, guid: 046566f07a3eb6f41b9cae525f183199,
