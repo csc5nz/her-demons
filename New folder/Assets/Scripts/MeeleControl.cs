@@ -83,8 +83,15 @@ public class MeeleControl : MonoBehaviour {
 		if (dist < chaseDist) {
 			chase ();
 		}
-		if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) || ((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x )){
-			attack ();
+		if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) || 
+			((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x )){
+			if (target.GetComponent<PlayerControl> ().canBeHit) {
+				target.GetComponent<PlayerControl> ().canBeHit = false;
+				attack ();
+				StartCoroutine (timer ());
+			}
+
+
 		}
 
 		if (hp <= 0) {
@@ -100,7 +107,17 @@ public class MeeleControl : MonoBehaviour {
 	private void attack ()
 	{
 		Vector3 curr = tr.position;
-		//print ("attack");
+		print ("attack");
+		target.GetComponent<PlayerControl> ().damaged (20);
+
+
+	}
+
+	IEnumerator timer() {
+		print(Time.time);
+		yield return new WaitForSeconds (2);
+		target.GetComponent<PlayerControl> ().canBeHit = true;
+		print(Time.time);
 	}
 
 	public void chase ()

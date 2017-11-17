@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour {
 	public bool stop;
 	public bool dmgd;
 	public int health = 100;
+	public bool canBeHit = true;
 
 	private Vector3 orig;
 	private Vector3 pos;
@@ -378,6 +379,12 @@ public class PlayerControl : MonoBehaviour {
 				pos2 = orig;
 			}
 		}
+	}
+	public void damaged(int dmg){
+		stop = true;
+		dmgd = true;
+		animator.SetInteger ("playermove", 3);
+		health -= dmg;
 	}
 	//public void notDmg(){
 		//dmgd = false;
