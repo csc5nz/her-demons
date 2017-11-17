@@ -25,14 +25,14 @@ public class MeeleControl : MonoBehaviour {
 	public GameObject target;
 
 	//navmesh
-	public Transform navTarget;
+	public Transform playerTransform;
 	private  UnityEngine.AI.NavMeshPath navPath;
 	private float elapsed = 0.0f;
 	private Vector3 navDirection;
 
 	//Lookoout
 	public float fieldOfView;
-	public float goHomeBufferDistance;
+	public float goHomeDistance;
 	public float gridDist;
 	public Transform navHome;
 
@@ -40,6 +40,10 @@ public class MeeleControl : MonoBehaviour {
 	public GameObject colliderPrefab;
 	private GameObject colliderNextBlock;
 	private GameObject colliderPrevBlock;	
+
+//	//leash
+//	public GameObject homePrefab;
+//	private GameObject homeInstance;
 
 
 	// Use this for initialization
@@ -62,6 +66,10 @@ public class MeeleControl : MonoBehaviour {
 		colliderNextBlock = Instantiate(colliderPrefab);
 		colliderPrevBlock = Instantiate(colliderPrefab);
 
+		//leash
+//		homeInstance = Instantiate(homePrefab);
+
+
 	}
 
 	// Update is called once per frame
@@ -69,18 +77,27 @@ public class MeeleControl : MonoBehaviour {
 	{
 		//navMesh
 		// Update the way to the goal every second.
-		elapsed += Time.deltaTime;
-		if (elapsed > 1.0f) {
-			elapsed -= 1.0f;
-			UnityEngine.AI.NavMesh.CalculatePath (transform.position, navTarget.position, UnityEngine.AI.NavMesh.AllAreas, navPath);
-		}
-		for (int i = 0; i < navPath.corners.Length - 1; i++)
-			Debug.DrawLine (navPath.corners [i], navPath.corners [i + 1], Color.red);		
+//		elapsed += Time.deltaTime;
+//		if (elapsed > 1.0f) {
+//			elapsed -= 1.0f;
+//			UnityEngine.AI.NavMesh.CalculatePath (transform.position, navTarget.position, UnityEngine.AI.NavMesh.AllAreas, navPath);
+//		}
+//		for (int i = 0; i < navPath.corners.Length - 1; i++)
+//			Debug.DrawLine (navPath.corners [i], navPath.corners [i + 1], Color.red);		
+//
+//			navDirection = navPath.corners [1];
+//		//print("navDirection: " + navDirection);
 
-			navDirection = navPath.corners [1];
-		//print("navDirection: " + navDirection);
-		float dist = Vector3.Distance (target.transform.position, home);
-		if (dist < chaseDist) {
+		
+
+		float dist = Vector3.Distance (playerTransform.position, transform.position);
+		float distHome = Vector3.Distance (home, transform.position);
+		if (dist <= chaseDist) {
+			calculatePath(playerTransform.position);
+			chase ();
+		}
+		else if (dist >= goHomeDistance){
+			calculatePath(home);
 			chase ();
 		}
 		if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) || ((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x )){
@@ -101,6 +118,19 @@ public class MeeleControl : MonoBehaviour {
 	{
 		Vector3 curr = tr.position;
 		//print ("attack");
+	}
+
+	public void calculatePath (Vector3 target)
+	{
+		elapsed += Time.deltaTime;
+		if (elapsed > 1.0f) {
+			elapsed -= 1.0f;
+			UnityEngine.AI.NavMesh.CalculatePath (transform.position, target, UnityEngine.AI.NavMesh.AllAreas, navPath);
+		}
+		for (int i = 0; i < navPath.corners.Length - 1; i++)
+			Debug.DrawLine (navPath.corners [i], navPath.corners [i + 1], Color.red);		
+
+		navDirection = navPath.corners [1];	
 	}
 
 	public void chase ()

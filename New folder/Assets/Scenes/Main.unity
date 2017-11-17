@@ -77,17 +77,15 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFilterTypeDirect: 0
-    m_PVRFilterTypeIndirect: 0
-    m_PVRFilterTypeAO: 0
+    m_PVRFiltering: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
-    m_PVRFilteringAtrousPositionSigmaIndirect: 2
-    m_PVRFilteringAtrousPositionSigmaAO: 1
+    m_PVRFilteringAtrousColorSigma: 1
+    m_PVRFilteringAtrousNormalSigma: 1
+    m_PVRFilteringAtrousPositionSigma: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -1530,9 +1528,9 @@ MonoBehaviour:
     m_Bits: 0
   direction: 0
   target: {fileID: 297572645}
-  navTarget: {fileID: 297572648}
+  playerTransform: {fileID: 0}
   fieldOfView: 0
-  goHomeBufferDistance: 0
+  goHomeDistance: 0
   gridDist: 0
   navHome: {fileID: 0}
   colliderPrefab: {fileID: 0}
@@ -3299,6 +3297,48 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5.8478327, y: 3.2183647, z: 1.8918324}
   m_Center: {x: -0.24330282, y: 1.1091824, z: -0.44591618}
+--- !u!1001 &1103510967
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4244702070022718, guid: d7412fda9d413f24996fe939410b9fc4, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -8.948139
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244702070022718, guid: d7412fda9d413f24996fe939410b9fc4, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.6149836
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244702070022718, guid: d7412fda9d413f24996fe939410b9fc4, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 7.3720503
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244702070022718, guid: d7412fda9d413f24996fe939410b9fc4, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244702070022718, guid: d7412fda9d413f24996fe939410b9fc4, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244702070022718, guid: d7412fda9d413f24996fe939410b9fc4, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244702070022718, guid: d7412fda9d413f24996fe939410b9fc4, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4244702070022718, guid: d7412fda9d413f24996fe939410b9fc4, type: 2}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d7412fda9d413f24996fe939410b9fc4, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1120622462
 GameObject:
   m_ObjectHideFlags: 0
@@ -6014,9 +6054,9 @@ MonoBehaviour:
     m_Bits: 0
   direction: 0
   target: {fileID: 297572645}
-  navTarget: {fileID: 297572648}
-  fieldOfView: 0
-  goHomeBufferDistance: 0
+  playerTransform: {fileID: 297572648}
+  fieldOfView: 10
+  goHomeDistance: 15
   gridDist: 0
   navHome: {fileID: 0}
   colliderPrefab: {fileID: 1353431352208560, guid: 046566f07a3eb6f41b9cae525f183199,
