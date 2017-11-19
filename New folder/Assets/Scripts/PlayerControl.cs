@@ -52,7 +52,6 @@ public class PlayerControl : MonoBehaviour {
 		if (Input.GetMouseButtonDown (0) && tr.position == pos2 && attacking == false) {
 			attack ();
 		}
-
 	}
 
 	void attack ()
@@ -132,9 +131,6 @@ public class PlayerControl : MonoBehaviour {
 
 		animator.SetInteger ("playermove", 5);
 		attacking = true;
-
-
-
 	}
 
 	public void move ()
@@ -159,186 +155,36 @@ public class PlayerControl : MonoBehaviour {
 			stop = false;
 		}
 
-		if (leftBlocked && hitObjectLeft.collider.tag == "lever") { // lever activate
-			if (Input.GetKeyDown (KeyCode.E)) {
-				hitObjectLeft.collider.gameObject.GetComponent <Lever> ().activated = true;
-			}
-		}
-		if (rightBlocked && hitObjectRight.collider.tag == "lever") { // lever activate
-			if (Input.GetKeyDown (KeyCode.E)) {
-				hitObjectRight.collider.gameObject.GetComponent <Lever> ().activated = true;
-			}
-		}
-		if (backBlocked && hitObjectBack.collider.tag == "lever") { // lever activate
-			if (Input.GetKeyDown (KeyCode.E)) {
-				hitObjectBack.collider.gameObject.GetComponent <Lever> ().activated = true;
-			}
-		}
-		if (forwardBlocked && hitObjectForward.collider.tag == "lever") { // lever activate
-			if (Input.GetKeyDown (KeyCode.E)) {
-				hitObjectForward.collider.gameObject.GetComponent <Lever> ().activated = true;
-			}
-		}
+		lever (leftBlocked, hitObjectLeft);
+		lever (rightBlocked, hitObjectRight);
+		lever (forwardBlocked, hitObjectForward);
+		lever (backBlocked, hitObjectBack);
 
 		if (rightBlocked && hitObjectRight.collider.tag == "elevatordown"){ //elevator activate
-			if (Input.GetKeyDown (KeyCode.E)) {
-				pos += 4 * Vector3.down;
-				pos2 = pos;
-				hitObjectRight.collider.gameObject.GetComponent <Elevator> ().activated = true;
-				stop = true; // while on elevator, player can't issue move commands
-			}
+			elevator(hitObjectRight, Vector3.down);
 		}
 
 		if (rightBlocked && hitObjectRight.collider.tag == "elevatorup"){ //elevator activate
-			if (Input.GetKeyDown (KeyCode.E)) {
-				pos += 4 * Vector3.up;
-				pos2 = pos;
-				hitObjectRight.collider.gameObject.GetComponent <Elevator> ().activated = true;
-				stop = true; // while on elevator, player can't issue move commands
-			}
+			elevator(hitObjectRight, Vector3.up);
 		}
 
 		if (Input.GetKey (KeyCode.D) && tr.position == pos2 && dmgd == false && attacking == false) { // moving right
-			if (rightBlocked && hitObjectRight.collider.tag == "stair") {
-				if ((tr.transform.position.y - 1) % 4 == 0) {
-					pos += 1 * Vector3.back; 
-					pos2 = pos + 1 * Vector3.up + 1 * Vector3.back;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 1) {
-					pos += 2* Vector3.up + 2 * Vector3.back; 
-					pos2 = pos;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 3) {
-					pos += 1* Vector3.up + 1 * Vector3.back; 
-					pos2 = pos + 1 * Vector3.back;
-				}
-			}
-			if (rightBlocked && hitObjectRight.collider.tag == "stairdown") {
-				if ((tr.transform.position.y - 1) % 4 == 1) {
-					pos += 1* Vector3.down + 1 * Vector3.back; 
-					pos2 = pos + 1 * Vector3.back;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 3) {
-					pos += 2* Vector3.down + 2 * Vector3.back; 
-					pos2 = pos;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 0) {
-					pos += 1 * Vector3.back; 
-					pos2 = pos + 1* Vector3.down + 1 * Vector3.back;
-				}
-			}
-			if (!rightBlocked || hitObjectRight.collider.tag == "floor") {
-				pos += 2 * Vector3.back;
-				pos2 = pos;
-			}
+			rightMove(rightBlocked, hitObjectRight);
 			newfaceDirection = 3;
 			orig = tr.transform.position;
 		}
 		if (Input.GetKey (KeyCode.A) && tr.position == pos2 && dmgd == false && attacking == false) { // moving left
-			if (leftBlocked && hitObjectLeft.collider.tag == "stair") {
-				if ((tr.transform.position.y - 1) % 4 == 1) {
-					pos += 1 * Vector3.forward; 
-					pos2 = pos + 1 * Vector3.up + 1 * Vector3.forward;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 1) {
-					pos += 2* Vector3.up + 2 * Vector3.forward; 
-					pos2 = pos;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 3) {
-					pos += 1* Vector3.up + 1 * Vector3.forward; 
-					pos2 = pos + 1 * Vector3.forward;
-				}
-			}
-			if (leftBlocked && hitObjectLeft.collider.tag == "stairdown") {
-				if ((tr.transform.position.y - 1) % 4 == 1) {
-					pos += 1* Vector3.down + 1 * Vector3.forward; 
-					pos2 = pos + 1 * Vector3.forward;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 3) {
-					pos += 2* Vector3.down + 2 * Vector3.forward; 
-					pos2 = pos;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 0) {
-					pos += 1 * Vector3.forward; 
-					pos2 = pos + 1* Vector3.down + 1 * Vector3.forward;
-				}
-			}
-			if (!leftBlocked || hitObjectLeft.collider.tag == "floor") {
-				pos += 2 * Vector3.forward;
-				pos2 = pos;
-			}
+			leftMove(leftBlocked, hitObjectLeft);
 			newfaceDirection = 1;
 			orig = tr.transform.position;
 		}
 		if (Input.GetKey (KeyCode.W) && tr.position == pos2 && dmgd == false && attacking == false) { // moving forward
-			if (forwardBlocked && hitObjectForward.collider.tag == "stair") {
-				if ((tr.transform.position.y - 1) % 4 == 0) {
-					pos += 1 * Vector3.right; 
-					pos2 = pos + 1 * Vector3.up + 1 * Vector3.right;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 1) {
-					pos += 2* Vector3.up + 2 * Vector3.right; 
-					pos2 = pos;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 3) {
-					pos += 1* Vector3.up + 1 * Vector3.right; 
-					pos2 = pos + 1 * Vector3.right;
-				}
-			}
-			if (forwardBlocked && hitObjectForward.collider.tag == "stairdown") {
-				if ((tr.transform.position.y - 1) % 4 == 1) {
-					pos += 1* Vector3.down + 1 * Vector3.right; 
-					pos2 = pos + 1 * Vector3.right;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 3) {
-					pos += 2* Vector3.down + 2 * Vector3.right; 
-					pos2 = pos;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 0) {
-					pos += 1 * Vector3.right; 
-					pos2 = pos + 1* Vector3.down + 1 * Vector3.right;
-				}
-			}
-			if (!forwardBlocked || hitObjectForward.collider.tag == "floor") {
-				pos += 2 * Vector3.right;
-				pos2 = pos;
-			}
+			forwardMove(forwardBlocked, hitObjectForward);
 			newfaceDirection = 0;
 			orig = tr.transform.position;
 		}
 		if (Input.GetKey (KeyCode.S) && tr.position == pos2 && dmgd == false && attacking == false) { // moving back
-			if (backBlocked && hitObjectBack.collider.tag == "stair") {
-				if ((tr.transform.position.y - 1) % 4 == 0) {
-					pos += 1 * Vector3.left; 
-					pos2 = pos + 1 * Vector3.up + 1 * Vector3.left;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 1) {
-					pos += 2* Vector3.up + 2 * Vector3.left; 
-					pos2 = pos;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 3) {
-					pos += 1* Vector3.up + 1 * Vector3.left; 
-					pos2 = pos + 1 * Vector3.left;
-				}
-			}
-			if (backBlocked && hitObjectBack.collider.tag == "stairdown") {
-				if ((tr.transform.position.y - 1) % 4 == 1) {
-					pos += 1* Vector3.down + 1 * Vector3.left; 
-					pos2 = pos + 1 * Vector3.left;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 3) {
-					pos += 2* Vector3.down + 2 * Vector3.left; 
-					pos2 = pos;
-				}
-				else if ((tr.transform.position.y - 1) % 4 == 0) {
-					pos += 1 * Vector3.left; 
-					pos2 = pos + 1* Vector3.down + 1 * Vector3.left;
-				}
-			}
-			if (!backBlocked || hitObjectBack.collider.tag == "floor") {
-				pos += 2 * Vector3.left;
-				pos2 = pos;
-			}
+			backMove(backBlocked, hitObjectBack);
 			newfaceDirection = 2;
 			orig = tr.transform.position;
 		}
@@ -376,8 +222,7 @@ public class PlayerControl : MonoBehaviour {
 		if (colliderNextBlock.transform.position != pos) {
 			colliderNextBlock.transform.position = pos;
 		}
-
-		if (dmgd == true) {
+		if (dmgd == true) { //damaged
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * runspeed);
 		} else if (Input.GetKey (KeyCode.LeftShift) && stop == false) { // running
 			animator.SetInteger ("playermove", 2); // running animation
@@ -386,10 +231,8 @@ public class PlayerControl : MonoBehaviour {
 			animator.SetInteger ("playermove", 1); // walking animation
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * walkspeed);
 		} 
-
 		if (tr.position == pos) {
 			pos = pos2;
-
 			//Keep collider behind
 			colliderPrevBlock.transform.position = transform.position;
 		}
@@ -419,4 +262,153 @@ public class PlayerControl : MonoBehaviour {
 		health -= dmg;
 	}
 
+	private void lever(bool blocked, RaycastHit hitObject){ // lever activate
+		if (blocked && hitObject.collider.tag == "lever") { 
+			if (Input.GetKeyDown (KeyCode.E)) {
+				hitObject.collider.gameObject.GetComponent <Lever> ().activated = true;
+			}
+		}
+	}
+
+	private void rightMove(bool blocked, RaycastHit hitObject){ //attempt to move right
+		if (blocked && hitObject.collider.tag == "stair") {
+			if ((tr.transform.position.y - 1) % 4 == 0) {
+				pos += 1 * Vector3.back; 
+				pos2 = pos + 1 * Vector3.up + 1 * Vector3.back;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 1) {
+				pos += 2* Vector3.up + 2 * Vector3.back; 
+				pos2 = pos;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 3) {
+				pos += 1* Vector3.up + 1 * Vector3.back; 
+				pos2 = pos + 1 * Vector3.back;
+			}
+		}
+		if (blocked && hitObject.collider.tag == "stairdown") {
+			if ((tr.transform.position.y - 1) % 4 == 1) {
+				pos += 1* Vector3.down + 1 * Vector3.back; 
+				pos2 = pos + 1 * Vector3.back;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 3) {
+				pos += 2* Vector3.down + 2 * Vector3.back; 
+				pos2 = pos;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 0) {
+				pos += 1 * Vector3.back; 
+				pos2 = pos + 1* Vector3.down + 1 * Vector3.back;
+			}
+		}
+		if (!blocked || hitObject.collider.tag == "floor") {
+			pos += 2 * Vector3.back;
+			pos2 = pos;
+		}
+	}
+
+	private void leftMove(bool blocked, RaycastHit hitObject){ //attempt to move left
+		if (blocked && hitObject.collider.tag == "stair") {
+			if ((tr.transform.position.y - 1) % 4 == 1) {
+				pos += 1 * Vector3.forward; 
+				pos2 = pos + 1 * Vector3.up + 1 * Vector3.forward;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 1) {
+				pos += 2* Vector3.up + 2 * Vector3.forward; 
+				pos2 = pos;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 3) {
+				pos += 1* Vector3.up + 1 * Vector3.forward; 
+				pos2 = pos + 1 * Vector3.forward;
+			}
+		}
+		if (blocked && hitObject.collider.tag == "stairdown") {
+			if ((tr.transform.position.y - 1) % 4 == 1) {
+				pos += 1* Vector3.down + 1 * Vector3.forward; 
+				pos2 = pos + 1 * Vector3.forward;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 3) {
+				pos += 2* Vector3.down + 2 * Vector3.forward; 
+				pos2 = pos;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 0) {
+				pos += 1 * Vector3.forward; 
+				pos2 = pos + 1* Vector3.down + 1 * Vector3.forward;
+			}
+		}
+		if (!blocked || hitObject.collider.tag == "floor") {
+			pos += 2 * Vector3.forward;
+			pos2 = pos;
+		}
+	}
+	private void forwardMove(bool blocked, RaycastHit hitObject){ //attempt to move forward
+		if (blocked && hitObject.collider.tag == "stair") {
+			if ((tr.transform.position.y - 1) % 4 == 0) {
+				pos += 1 * Vector3.right; 
+				pos2 = pos + 1 * Vector3.up + 1 * Vector3.right;
+			} else if ((tr.transform.position.y - 1) % 4 == 1) {
+				pos += 2 * Vector3.up + 2 * Vector3.right; 
+				pos2 = pos;
+			} else if ((tr.transform.position.y - 1) % 4 == 3) {
+				pos += 1 * Vector3.up + 1 * Vector3.right; 
+				pos2 = pos + 1 * Vector3.right;
+			}
+		}
+		if (blocked && hitObject.collider.tag == "stairdown") {
+			if ((tr.transform.position.y - 1) % 4 == 1) {
+				pos += 1 * Vector3.down + 1 * Vector3.right; 
+				pos2 = pos + 1 * Vector3.right;
+			} else if ((tr.transform.position.y - 1) % 4 == 3) {
+				pos += 2 * Vector3.down + 2 * Vector3.right; 
+				pos2 = pos;
+			} else if ((tr.transform.position.y - 1) % 4 == 0) {
+				pos += 1 * Vector3.right; 
+				pos2 = pos + 1 * Vector3.down + 1 * Vector3.right;
+			}
+		}
+		if (!blocked || hitObject.collider.tag == "floor") {
+			pos += 2 * Vector3.right;
+			pos2 = pos;
+		}
+	}
+	private void backMove(bool blocked, RaycastHit hitObject){ // attempt to move back
+		if (blocked && hitObject.collider.tag == "stair") {
+			if ((tr.transform.position.y - 1) % 4 == 0) {
+				pos += 1 * Vector3.left; 
+				pos2 = pos + 1 * Vector3.up + 1 * Vector3.left;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 1) {
+				pos += 2* Vector3.up + 2 * Vector3.left; 
+				pos2 = pos;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 3) {
+				pos += 1* Vector3.up + 1 * Vector3.left; 
+				pos2 = pos + 1 * Vector3.left;
+			}
+		}
+		if (blocked && hitObject.collider.tag == "stairdown") {
+			if ((tr.transform.position.y - 1) % 4 == 1) {
+				pos += 1* Vector3.down + 1 * Vector3.left; 
+				pos2 = pos + 1 * Vector3.left;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 3) {
+				pos += 2* Vector3.down + 2 * Vector3.left; 
+				pos2 = pos;
+			}
+			else if ((tr.transform.position.y - 1) % 4 == 0) {
+				pos += 1 * Vector3.left; 
+				pos2 = pos + 1* Vector3.down + 1 * Vector3.left;
+			}
+		}
+		if (!blocked || hitObject.collider.tag == "floor") {
+			pos += 2 * Vector3.left;
+			pos2 = pos;
+		}
+	}
+	private void elevator(RaycastHit hitObject, Vector3 dir){
+		if (Input.GetKeyDown (KeyCode.E)) {
+			pos += 4 * dir;
+			pos2 = pos;
+			hitObject.collider.gameObject.GetComponent <Elevator> ().activated = true;
+			stop = true; // while on elevator, player can't issue move commands
+		}
+	}
 }
