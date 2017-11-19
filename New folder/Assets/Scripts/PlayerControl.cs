@@ -339,6 +339,7 @@ public class PlayerControl : MonoBehaviour {
 			pos2 = pos;
 		}
 	}
+
 	private void forwardMove(bool blocked, RaycastHit hitObject){ //attempt to move forward
 		if (blocked && hitObject.collider.tag == "stair") {
 			if ((tr.transform.position.y - 1) % 4 == 0) {
@@ -369,6 +370,7 @@ public class PlayerControl : MonoBehaviour {
 			pos2 = pos;
 		}
 	}
+
 	private void backMove(bool blocked, RaycastHit hitObject){ // attempt to move back
 		if (blocked && hitObject.collider.tag == "stair") {
 			if ((tr.transform.position.y - 1) % 4 == 0) {
@@ -403,6 +405,7 @@ public class PlayerControl : MonoBehaviour {
 			pos2 = pos;
 		}
 	}
+
 	private void elevator(RaycastHit hitObject, Vector3 dir){
 		if (Input.GetKeyDown (KeyCode.E)) {
 			pos += 4 * dir;
