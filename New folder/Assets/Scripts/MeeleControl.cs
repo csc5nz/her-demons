@@ -106,7 +106,7 @@ public class MeeleControl : MonoBehaviour {
 			((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x )){
 			if (target.GetComponent<PlayerControl> ().canBeHit && dead == false) {
 				target.GetComponent<PlayerControl> ().canBeHit = false;
-				attack ();
+				animator.SetInteger ("enemymove", 2);
 				StartCoroutine (timer ());
 			}
 
@@ -127,8 +127,6 @@ public class MeeleControl : MonoBehaviour {
 	private void attack ()
 	{
 		Vector3 curr = tr.position;
-
-		//animator.SetInteger ("enemymove", 2);
 		print ("attack");
 		target.GetComponent<PlayerControl> ().damaged (10);
 

@@ -208,7 +208,7 @@ public class PlayerControl : MonoBehaviour {
 			animator.SetInteger ("playermove", 0);
 		}
 
-		if (transform.position == pos2) { // if the character reaches destination, start idle animation
+		if (transform.position == pos2 && !dmgd) { // if the character reaches destination, start idle animation
 			stop = false;
 			orig = tr.transform.position;
 			if (!Input.GetKey (KeyCode.W) && !Input.GetKey (KeyCode.A) && !Input.GetKey (KeyCode.S) && !Input.GetKey (KeyCode.D)) {
