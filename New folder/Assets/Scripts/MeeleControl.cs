@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MeeleControl : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class MeeleControl : MonoBehaviour {
 	public Animator animator;
 	public bool stop;
 	public float chaseDist;
+	public Image healthBar;
 
 	private Vector3 pos;
 	private Vector3 pos2;
@@ -121,7 +123,7 @@ public class MeeleControl : MonoBehaviour {
 
 	public void getHit() {
 		hp -= 1;
-		print (hp);
+		healthBar.fillAmount = hp / 3f;
 	}
 
 	private void attack ()

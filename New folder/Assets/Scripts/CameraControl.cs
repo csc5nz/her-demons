@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour {
 
 	public GameObject player;
+	public bool hpbar = false;
 
 	public float cameraX = -75.0f;
 	public float cameraY = 75.0f;
@@ -12,6 +13,7 @@ public class CameraControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
 	}
 
 	// Update is called once per frame
@@ -22,5 +24,10 @@ public class CameraControl : MonoBehaviour {
 		pos.z += cameraZ;
 
 		transform.position = pos;
+		if (hpbar == true) {
+			if (player.activeInHierarchy == false) {
+				this.gameObject.SetActive (false);
+			}
+		}
 	}
 }

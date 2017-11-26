@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour {
-
 	public GameObject archer;
 	public GameObject player;
 	public GameObject hitarea;

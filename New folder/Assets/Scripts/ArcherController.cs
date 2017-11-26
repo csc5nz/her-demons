@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ArcherController : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class ArcherController : MonoBehaviour {
 	public int faceDirection;
 	public int hp = 3;
 	public bool dead;
+	public Image healthBar;
 
 	private RaycastHit hit;
 	private int newfaceDirection;
@@ -121,6 +123,7 @@ public class ArcherController : MonoBehaviour {
 
 	public void getHit() {
 		hp -= 1;
+		healthBar.fillAmount = hp / 3f;
 	}
 
 	public void Death(){

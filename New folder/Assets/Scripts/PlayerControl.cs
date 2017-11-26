@@ -66,7 +66,7 @@ public class PlayerControl : MonoBehaviour {
 
 		bool blocked;
 
-		if (Input.mousePosition.x < Screen.width / 2 && Input.mousePosition.y > Screen.height / 2) {
+		if (Input.mousePosition.x < Screen.width / 2 && Input.mousePosition.y > Screen.height / 2) { // left attack
 			print ("Left Attack");
 			newfaceDirection = 1;
 			blocked = Physics.Linecast (curr, currforward, out hit, 1 << 9);
@@ -81,7 +81,7 @@ public class PlayerControl : MonoBehaviour {
 				print ("Miss!");
 			}
 		}
-		if (Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.y > Screen.height / 2) {
+		if (Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.y > Screen.height / 2) { // forward attack
 			print ("Forward Attack");
 			newfaceDirection = 4;
 			blocked = Physics.Linecast (curr, currright, out hit, 1 << 9);
@@ -96,7 +96,7 @@ public class PlayerControl : MonoBehaviour {
 				print ("Miss!");
 			}
 		}
-		if (Input.mousePosition.x < Screen.width / 2 && Input.mousePosition.y < Screen.height / 2) {
+		if (Input.mousePosition.x < Screen.width / 2 && Input.mousePosition.y < Screen.height / 2) { // back attack
 			print ("Back Attack");
 			newfaceDirection = 2;
 			blocked = Physics.Linecast (curr, currleft, out hit, 1 << 9 );
@@ -111,7 +111,7 @@ public class PlayerControl : MonoBehaviour {
 				print ("Miss!");
 			}
 		}
-		if (Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.y < Screen.height / 2) {
+		if (Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.y < Screen.height / 2) { // right attack
 			print ("Right Attack");
 			newfaceDirection = 3;
 			blocked = Physics.Linecast (curr, currback, out hit, 1 << 9);
@@ -159,11 +159,9 @@ public class PlayerControl : MonoBehaviour {
 		lever (rightBlocked, hitObjectRight);
 		lever (forwardBlocked, hitObjectForward);
 		lever (backBlocked, hitObjectBack);
-
 		if (rightBlocked && hitObjectRight.collider.tag == "elevatordown"){ //elevator activate
 			elevator(hitObjectRight, Vector3.down);
 		}
-
 		if (rightBlocked && hitObjectRight.collider.tag == "elevatorup"){ //elevator activate
 			elevator(hitObjectRight, Vector3.up);
 		}
@@ -188,12 +186,11 @@ public class PlayerControl : MonoBehaviour {
 			newfaceDirection = 2;
 			orig = tr.transform.position;
 		}
-
+	
 		if (Input.GetKey (KeyCode.P) && tr.position == pos) { //temporary vertical up
 			pos += 4 * Vector3.up;
 			pos2 = pos;
 		}
-
 		if (Input.GetKey (KeyCode.O) && tr.position == pos) { // temporary vertical down
 			pos += 4 * Vector3.down;
 			pos2 = pos;
@@ -207,7 +204,6 @@ public class PlayerControl : MonoBehaviour {
 		if (stop == true) {
 			animator.SetInteger ("playermove", 0);
 		}
-
 		if (transform.position == pos2 && !dmgd) { // if the character reaches destination, start idle animation
 			stop = false;
 			orig = tr.transform.position;
