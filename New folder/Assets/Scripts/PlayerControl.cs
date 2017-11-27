@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class PlayerControl : MonoBehaviour {
 	public bool attacking;
 	public int health = 100;
 	public bool canBeHit = true;
+	public Image healthBar;
 
 	private Vector3 orig;
 	private Vector3 pos;
@@ -239,6 +241,7 @@ public class PlayerControl : MonoBehaviour {
 		dmgd = true;
 		animator.SetInteger ("playermove", 3);
 		health -= dmg;
+		healthBar.fillAmount = health / 100f;
 		if (dir == 0) {
 			if (pos2.x > orig.x) {
 				pos = orig;
@@ -256,6 +259,7 @@ public class PlayerControl : MonoBehaviour {
 		dmgd = true;
 		animator.SetInteger ("playermove", 3);
 		health -= dmg;
+		healthBar.fillAmount = health / 100f;
 	}
 
 	private void lever(bool blocked, RaycastHit hitObject){ // lever activate
