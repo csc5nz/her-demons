@@ -51,7 +51,7 @@ public class PlayerControl : MonoBehaviour {
 			move ();
 		}
 		
-		if (Input.GetMouseButtonDown (0) && tr.position == pos2 && attacking == false) {
+		if (Input.GetMouseButtonDown (0) && tr.position == pos2 && attacking == false && dmgd == false) {
 			attack ();
 		}
 	}
@@ -203,7 +203,7 @@ public class PlayerControl : MonoBehaviour {
 		transform.Rotate (0, 90 * (faceDirection - newfaceDirection), 0); // rotate to face the correct direction
 		faceDirection = newfaceDirection;
 
-		if (stop == true) {
+		if (stop == true && !dmgd) {
 			animator.SetInteger ("playermove", 0);
 		}
 		if (transform.position == pos2 && !dmgd) { // if the character reaches destination, start idle animation
