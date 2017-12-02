@@ -17,7 +17,7 @@ public class PlayerControl : MonoBehaviour {
 
 	private Vector3 orig;
 	private Vector3 pos;
-	private Vector3 pos2;
+	public Vector3 pos2;
 	private Transform tr;
 	private int faceDirection; 
 	private int newfaceDirection;
