@@ -132,7 +132,6 @@ public class MeeleControl : MonoBehaviour {
 		print ("attack");
 		target.GetComponent<PlayerControl> ().damaged (10);
 
-
 	}
 
 	IEnumerator timer() {

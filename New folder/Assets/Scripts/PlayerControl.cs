@@ -12,7 +12,7 @@ public class PlayerControl : MonoBehaviour {
 	public bool dmgd;
 	public bool attacking;
 	public int health = 100;
-	public bool canBeHit = true;
+	public bool canBeHit;
 	public Image healthBar;
 
 	private Vector3 orig;
@@ -39,6 +39,7 @@ public class PlayerControl : MonoBehaviour {
 		stop = false;
 		dmgd = false;
 		attacking = false;
+		canBeHit = true;
 
 		//collider that occupy 2 blocks
 		colliderNextBlock = Instantiate(colliderPrefab);
@@ -58,81 +59,59 @@ public class PlayerControl : MonoBehaviour {
 
 	void attack ()
 	{
-		RaycastHit hit;
-
 		Vector3 curr = tr.position;
-		Vector3 currback = curr + 2 * Vector3.back;
-		Vector3 currforward = curr + 2 * Vector3.forward;
-		Vector3 currright = curr + 2 * Vector3.right;
-		Vector3 currleft = curr + 2 * Vector3.left;
-
-		bool blocked;
+		Vector3 currback = curr + 2.5f * Vector3.back;
+		Vector3 currforward = curr + 2.5f * Vector3.forward;
+		Vector3 currright = curr + 2.5f * Vector3.right;
+		Vector3 currleft = curr + 2.5f * Vector3.left;
 
 		if (Input.mousePosition.x < Screen.width / 2 && Input.mousePosition.y > Screen.height / 2) { // left attack
 			print ("Left Attack");
 			newfaceDirection = 1;
-			blocked = Physics.Linecast (curr, currforward, out hit, 1 << 9);
-			if (blocked) {
-				print ("Hit!");
-				if (hit.collider.gameObject.tag == "melee") {
-					hit.collider.gameObject.GetComponent<MeeleControl> ().getHit ();
-				} else if (hit.collider.gameObject.tag == "archer") {
-					hit.collider.gameObject.GetComponent<ArcherController> ().getHit ();
-				}
-			} else {
-				print ("Miss!");
-			}
+			//blocked = Physics.Linecast (curr, currforward, out hit, 1 << 9);
+			StartCoroutine(attackdelay (curr, currforward));
 		}
 		if (Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.y > Screen.height / 2) { // forward attack
 			print ("Forward Attack");
 			newfaceDirection = 4;
-			blocked = Physics.Linecast (curr, currright, out hit, 1 << 9);
-			if (blocked) {
-				print ("Hit!");
-				if (hit.collider.gameObject.tag == "melee") {
-					hit.collider.gameObject.GetComponent<MeeleControl> ().getHit ();
-				} else if (hit.collider.gameObject.tag == "archer") {
-					hit.collider.gameObject.GetComponent<ArcherController> ().getHit ();
-				}
-			} else {
-				print ("Miss!");
-			}
+			//blocked = Physics.Linecast (curr, currright, out hit, 1 << 9);
+			StartCoroutine(attackdelay (curr, currright));
 		}
 		if (Input.mousePosition.x < Screen.width / 2 && Input.mousePosition.y < Screen.height / 2) { // back attack
 			print ("Back Attack");
 			newfaceDirection = 2;
-			blocked = Physics.Linecast (curr, currleft, out hit, 1 << 9 );
-			if (blocked) {
-				print ("Hit!");
-				if (hit.collider.gameObject.tag == "melee") {
-					hit.collider.gameObject.GetComponent<MeeleControl> ().getHit ();
-				} else if (hit.collider.gameObject.tag == "archer") {
-					hit.collider.gameObject.GetComponent<ArcherController> ().getHit ();
-				}
-			} else {
-				print ("Miss!");
-			}
+			//blocked = Physics.Linecast (curr, currleft, out hit, 1 << 9 );
+			StartCoroutine(attackdelay (curr, currleft));
 		}
 		if (Input.mousePosition.x > Screen.width / 2 && Input.mousePosition.y < Screen.height / 2) { // right attack
 			print ("Right Attack");
 			newfaceDirection = 3;
-			blocked = Physics.Linecast (curr, currback, out hit, 1 << 9);
-			if (blocked) {
-				print ("Hit!");
-				if (hit.collider.gameObject.tag == "melee") {
-					hit.collider.gameObject.GetComponent<MeeleControl> ().getHit ();
-				} else if (hit.collider.gameObject.tag == "archer") {
-					hit.collider.gameObject.GetComponent<ArcherController> ().getHit ();
-				}
-			} else {
-				print ("Miss!");
-			}
+			//blocked = Physics.Linecast (curr, currback, out hit, 1 << 9);
+			StartCoroutine(attackdelay (curr, currback)); 
 		}
 		transform.Rotate (0, 90 * (faceDirection - newfaceDirection), 0); // rotate to face the correct direction
 		faceDirection = newfaceDirection;
 
 		animator.SetInteger ("playermove", 5);
 		attacking = true;
+	}
+
+	IEnumerator attackdelay(Vector3 curr, Vector3 currdest) {
+		print(Time.time);
+		RaycastHit hit;
+		yield return new WaitForSeconds (0.6f);
+		bool blocked = Physics.Linecast (curr, currdest, out hit, 1 << 9);
+		if (blocked && !dmgd) {
+			print ("Hit!");
+			if (hit.collider.gameObject.tag == "melee") {
+				hit.collider.gameObject.GetComponent<MeeleControl> ().getHit ();
+			} else if (hit.collider.gameObject.tag == "archer") {
+				hit.collider.gameObject.GetComponent<ArcherController> ().getHit ();
+			}
+		} else {
+			print ("Miss!");
+		}
+		print(Time.time);
 	}
 
 	public void move ()
