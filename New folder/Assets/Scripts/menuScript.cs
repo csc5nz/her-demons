@@ -11,17 +11,26 @@ public class menuScript : MonoBehaviour {
 	public Button credits;
 	public Button exit;
 	public Canvas ctrlscreen;
+	public Button back;
 
 	// Use this for initialization
 	void Start () {
 		ctrlscreen.GetComponent<Canvas>();
+		ctrlscreen.enabled = false;
+
 		start = start.GetComponent<Button> ();
 		start.onClick.AddListener (StartGame);
+
 		controls = controls.GetComponent<Button> ();
-		start.onClick.AddListener (ControlScreen);
+		controls.onClick.AddListener (ControlScreen);
+
 		credits = credits.GetComponent<Button> ();
+
 		exit = exit.GetComponent<Button> ();
 		exit.onClick.AddListener (ExitGame);
+
+		back = back.GetComponent<Button> ();
+		back.onClick.AddListener (backtomenu);
 	}
 	
 	// Update is called once per frame
@@ -39,5 +48,9 @@ public class menuScript : MonoBehaviour {
 
 	public void ExitGame() {
 		Application.Quit ();
+	}
+
+	public void backtomenu() {
+		ctrlscreen.enabled = false;
 	}
 }
