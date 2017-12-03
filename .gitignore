@@ -32,3 +32,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+*.unity
+New folder/Assets/Scenes/DeathScreen.unity.meta
+New folder/Assets/2D.meta
+New folder/Assets/Scenes/Main.unity
