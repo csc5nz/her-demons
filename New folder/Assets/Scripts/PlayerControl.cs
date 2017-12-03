@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour {
 
@@ -14,6 +15,9 @@ public class PlayerControl : MonoBehaviour {
 	public int health = 100;
 	public bool canBeHit;
 	public Image healthBar;
+	public int hpPotion;
+	public GameObject potionimage;
+	public Text potionText;
 
 	private Vector3 orig;
 	private Vector3 pos;
@@ -40,6 +44,8 @@ public class PlayerControl : MonoBehaviour {
 		dmgd = false;
 		attacking = false;
 		canBeHit = true;
+		hpPotion = 0;
+		potionText.text = "";
 
 		//collider that occupy 2 blocks
 		colliderNextBlock = Instantiate(colliderPrefab);
@@ -54,6 +60,18 @@ public class PlayerControl : MonoBehaviour {
 		
 		if (Input.GetMouseButtonDown (0) && tr.position == pos2 && attacking == false && dmgd == false) {
 			attack ();
+		}
+
+		if (Input.GetKeyDown(KeyCode.Q) && attacking == false && dmgd == false) {
+			drink ();
+		}
+
+		if (hpPotion <= 0) {
+			potionimage.GetComponent<MeshRenderer> ().enabled = false;
+			potionText.text = "";
+		} else {
+			potionimage.GetComponent<MeshRenderer> ().enabled = true;
+
 		}
 	}
 
@@ -241,6 +259,19 @@ public class PlayerControl : MonoBehaviour {
 		healthBar.fillAmount = health / 100f;
 	}
 
+	private void drink(){
+		if (hpPotion > 0) {
+			hpPotion -= 1;
+			if (health >= 50) {
+				health = 100;
+			} else {
+				health += 50;
+			}
+			healthBar.fillAmount = health / 100f;
+			potionText.text = "" + hpPotion;
+		}
+	}
+
 	private void lever(bool blocked, RaycastHit hitObject){ // lever activate
 		if (blocked && hitObject.collider.tag == "lever") { 
 			if (Input.GetKeyDown (KeyCode.E)) {
@@ -393,4 +424,5 @@ public class PlayerControl : MonoBehaviour {
 			stop = true; // while on elevator, player can't issue move commands
 		}
 	}
+
 }
