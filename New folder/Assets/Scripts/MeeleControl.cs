@@ -130,13 +130,13 @@ public class MeeleControl : MonoBehaviour {
 	{
 		Vector3 curr = tr.position;
 		print ("attack");
-		target.GetComponent<PlayerControl> ().damaged (10);
+		target.GetComponent<PlayerControl> ().damaged (30);
 
 	}
 
 	IEnumerator timer() {
 		print(Time.time);
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (1);
 		target.GetComponent<PlayerControl> ().canBeHit = true;
 		print(Time.time);
 	}

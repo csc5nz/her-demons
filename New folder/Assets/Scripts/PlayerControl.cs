@@ -49,7 +49,7 @@ public class PlayerControl : MonoBehaviour {
 		hpPotion = 0;
 		potionText.text = "";
 		health = 100;
-		stamina = 150.0f;
+		stamina = 100.0f;
 
 		//collider that occupy 2 blocks
 		colliderNextBlock = Instantiate(colliderPrefab);
@@ -77,10 +77,10 @@ public class PlayerControl : MonoBehaviour {
 			potionimage.GetComponent<MeshRenderer> ().enabled = true;
 
 		}
-		if (stamina < 150 && !attacking) {
-			stamina += 0.1f;
+		if (stamina < 100 && !attacking) {
+			stamina += 0.2f;
 		}
-		staminaBar.fillAmount = stamina / 150f;
+		staminaBar.fillAmount = stamina / 100f;
 	}
 
 	void attack ()
@@ -233,7 +233,7 @@ public class PlayerControl : MonoBehaviour {
 			animator.SetInteger ("playermove", 2); // running animation
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * runspeed);
 			if (transform.position != pos) {
-				stamina -= 0.2f;
+				stamina -= 0.3f;
 			}
 		} else { // walking
 			animator.SetInteger ("playermove", 1); // walking animation
