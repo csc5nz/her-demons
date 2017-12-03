@@ -11,6 +11,7 @@ public class MeeleControl : MonoBehaviour {
 	public Animator animator;
 	public bool stop;
 	public float chaseDist;
+	public float homeRadious;
 	public Image healthBar;
 
 	private Vector3 pos;
@@ -60,6 +61,9 @@ public class MeeleControl : MonoBehaviour {
 		stop = false;
 		dead = false;
 
+		chaseDist = 10;
+		homeRadious = 10;
+
 		direction = 1;
 
 		//navmesh
@@ -96,11 +100,23 @@ public class MeeleControl : MonoBehaviour {
 
 		float dist = Vector3.Distance (playerTransform.position, transform.position);
 		float distHome = Vector3.Distance (home, transform.position);
-		if (dist <= chaseDist && dead == false) {
-			calculatePath(playerTransform.position);
+		float playerDistHome = Vector3.Distance (playerTransform.position, home);
+
+		if (distHome > homeRadious) {
+			calculatePath (home);
 			chase ();
 		}
-		else if (dist >= goHomeDistance && dead == false){
+		else if (playerDistHome > homeRadious) {
+			calculatePath (home);
+			chase ();
+		}
+		else if (dist <= chaseDist && dead == false) {
+			
+			calculatePath (playerTransform.position);
+			chase ();
+			
+		} 
+		else if (dist > chaseDist && dead == false){
 			calculatePath(home);
 			chase ();
 		}
