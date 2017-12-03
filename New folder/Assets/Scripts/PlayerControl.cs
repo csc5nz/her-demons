@@ -12,9 +12,11 @@ public class PlayerControl : MonoBehaviour {
 	public bool stop;
 	public bool dmgd;
 	public bool attacking;
-	public int health = 100;
+	public int health;
+	public float stamina;
 	public bool canBeHit;
 	public Image healthBar;
+	public Image staminaBar;
 	public int hpPotion;
 	public GameObject potionimage;
 	public Text potionText;
@@ -46,6 +48,8 @@ public class PlayerControl : MonoBehaviour {
 		canBeHit = true;
 		hpPotion = 0;
 		potionText.text = "";
+		health = 100;
+		stamina = 150.0f;
 
 		//collider that occupy 2 blocks
 		colliderNextBlock = Instantiate(colliderPrefab);
@@ -58,7 +62,7 @@ public class PlayerControl : MonoBehaviour {
 			move ();
 		}
 		
-		if (Input.GetMouseButtonDown (0) && tr.position == pos2 && attacking == false && dmgd == false) {
+		if (Input.GetMouseButtonDown (0) && tr.position == pos2 && attacking == false && dmgd == false && (stamina > 30)) {
 			attack ();
 		}
 
@@ -73,6 +77,10 @@ public class PlayerControl : MonoBehaviour {
 			potionimage.GetComponent<MeshRenderer> ().enabled = true;
 
 		}
+		if (stamina < 150 && !attacking) {
+			stamina += 0.1f;
+		}
+		staminaBar.fillAmount = stamina / 150f;
 	}
 
 	void attack ()
@@ -82,6 +90,8 @@ public class PlayerControl : MonoBehaviour {
 		Vector3 currforward = curr + 2.5f * Vector3.forward;
 		Vector3 currright = curr + 2.5f * Vector3.right;
 		Vector3 currleft = curr + 2.5f * Vector3.left;
+
+		stamina -= 30;
 
 		if (Input.mousePosition.x < Screen.width / 2 && Input.mousePosition.y > Screen.height / 2) { // left attack
 			print ("Left Attack");
@@ -219,9 +229,12 @@ public class PlayerControl : MonoBehaviour {
 		}
 		if (dmgd == true) { //damaged
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * runspeed);
-		} else if (Input.GetKey (KeyCode.LeftShift) && stop == false) { // running
+		} else if (Input.GetKey (KeyCode.LeftShift) && stop == false && (stamina > 0)) { // running
 			animator.SetInteger ("playermove", 2); // running animation
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * runspeed);
+			if (transform.position != pos) {
+				stamina -= 0.2f;
+			}
 		} else { // walking
 			animator.SetInteger ("playermove", 1); // walking animation
 			transform.position = Vector3.MoveTowards (transform.position, pos, Time.deltaTime * walkspeed);
