@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Modelhit : MonoBehaviour {
+public class MeeleModelhit : MonoBehaviour {
 
-	public GameObject player;
+	public GameObject meele;
 
 	public void notDmg(){ //At the end of the damaged animation, set status back to normal and animation to idle
-		player.GetComponent<PlayerControl>().dmgd = false;
+		meele.GetComponent<MeeleControl>().dmg = false;
 		//player.GetComponent<PlayerControl>().attacking = false;
-		player.GetComponent<PlayerControl> ().animator.SetInteger ("playermove", 0);
+		meele.GetComponent<MeeleControl> ().animator.SetInteger ("playermove", 0);
 	}
 
 	public void stopAttacking(){ //at the end of the attack animation, set status back to normal and animation to idle
-		player.GetComponent<PlayerControl>().attacking = false;
-		player.GetComponent<PlayerControl>().animator.SetInteger ("playermove", 0);
+		meele.GetComponent<MeeleControl>().attacking = false;
+		meele.GetComponent<MeeleControl>().animator.SetInteger ("playermove", 0);
 	}
 }

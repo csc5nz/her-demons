@@ -12,6 +12,7 @@ public class ArcherController : MonoBehaviour {
 	public GameObject playerModel;
 	public int faceDirection;
 	public int hp = 3;
+	public bool dmgd;
 	public bool dead;
 	public Image healthBar;
 
@@ -21,6 +22,7 @@ public class ArcherController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		dead = false;
+		dmgd = false;
 	}
 	
 	// Update is called once per frame
@@ -30,15 +32,15 @@ public class ArcherController : MonoBehaviour {
 		float distance = Vector3.Distance(playerpos,enemypos);
 
 		RaycastHit hit;
-		if (playerpos.y == enemypos.y && distance <= alertdistance) { 
+		if (playerpos.y == enemypos.y && distance <= alertdistance && !dmgd) { 
 			animator.SetInteger ("alert", 1);
-		} else {
+		} else if (!dmgd){
 			animator.SetInteger ("alert", 0);
 		}
 
-		if (playerpos.y == enemypos.y && distance <= alertdistance && dead == false) { //must be from same level to recognize player and distance between enemy and player must be less than 10 tiles away
-			if (playerpos.x == enemypos.x && Mathf.Abs (playerpos.z - enemypos.z) > 2) {
-				if (playerpos.z > enemypos.z ) { //player at top left
+		if (playerpos.y == enemypos.y && distance <= alertdistance && !dead && !dmgd) { //must be from same level to recognize player and distance between enemy and player must be less than 10 tiles away
+			if (playerpos.x == enemypos.x) {
+				if (playerpos.z > enemypos.z) { //player at top left
 					bool blocked = Physics.Linecast (enemypos, playerpos, out hit, 1 << 8);
 					if(hit.collider.gameObject == playerModel){
 						animator.SetInteger ("alert", 2);
@@ -52,7 +54,7 @@ public class ArcherController : MonoBehaviour {
 					newfaceDirection = 1;
 				}
 			}
-			else if (playerpos.z == enemypos.z && Mathf.Abs (playerpos.x - enemypos.x) > 2) {
+			else if (playerpos.z == enemypos.z) {
 				if (playerpos.x > enemypos.x) { // player at top right
 					bool blocked = Physics.Linecast (enemypos, playerpos, out hit, 1 << 8);
 					if(hit.collider.gameObject == playerModel){
@@ -124,6 +126,12 @@ public class ArcherController : MonoBehaviour {
 	public void getHit() {
 		hp -= 1;
 		healthBar.fillAmount = hp / 3f;
+		dmgd = true;
+		animator.SetInteger ("alert", 5);
+	}
+
+	public void notDmg(){
+		dmgd = false;
 	}
 
 	public void Death(){

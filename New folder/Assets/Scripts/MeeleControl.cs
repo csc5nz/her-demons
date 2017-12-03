@@ -7,10 +7,11 @@ public class MeeleControl : MonoBehaviour {
 
 	public float walkspeed = 1.8F;
 	public float runspeed = 6F;
-	public int hp;
 	public Animator animator;
+	public int hp;
+	public bool dmg;
+	public bool attacking;
 	public bool stop;
-	public float chaseDist;
 	public Image healthBar;
 
 	private Vector3 pos;
@@ -20,6 +21,8 @@ public class MeeleControl : MonoBehaviour {
 	private int faceDirection; 
 	private int newfaceDirection;
 
+	public float chaseDist;
+	public float homeRadious;
 
 	public LayerMask blockingLayer;	
 
@@ -60,6 +63,10 @@ public class MeeleControl : MonoBehaviour {
 		newfaceDirection = 0;
 		stop = false;
 		dead = false;
+		attacking = false;
+
+		chaseDist = 10;
+		homeRadious = 10;
 
 		direction = 1;
 
@@ -71,8 +78,7 @@ public class MeeleControl : MonoBehaviour {
 		colliderNextBlock = Instantiate(colliderPrefab);
 		colliderPrevBlock = Instantiate(colliderPrefab);
 
-		//leash
-//		homeInstance = Instantiate(homePrefab);
+
 
 
 	}
@@ -97,27 +103,35 @@ public class MeeleControl : MonoBehaviour {
 
 		float dist = Vector3.Distance (playerTransform.position, transform.position);
 		float distHome = Vector3.Distance (home, transform.position);
-		if (dist <= chaseDist && dead == false  ) {
+		float playerDistHome = Vector3.Distance (playerTransform.position, home);
+
+		if (!attacking) {
+			if (distHome > homeRadious) {
+				calculatePath (home);
+				chase ();
+			} else if (playerDistHome > homeRadious) {
+				calculatePath (home);
+				chase ();
+			} else if (dist <= chaseDist && dead == false) {
 			
-			if (calculatePath(playerTransform.position)){//navPath.status != UnityEngine.AI.NavMeshPathStatus.PathComplete){
+				calculatePath (playerTransform.position);
+				chase ();
+			
+			} else if (dist > chaseDist && dead == false) {
+				calculatePath (home);
 				chase ();
 			}
 		}
-		else if (dist >= goHomeDistance && dead == false ){
-			
-			if (calculatePath(home)){//navPath.status != UnityEngine.AI.NavMeshPathStatus.PathComplete){
-				chase ();
+		if (!attacking) {
+			if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) ||
+			   ((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x)) {
+				if (target.GetComponent<PlayerControl> ().canBeHit && dead == false) {
+					target.GetComponent<PlayerControl> ().canBeHit = false;
+					animator.SetInteger ("enemymove", 2);
+					StartCoroutine (timer ());
+				}
+			//attacking = true;
 			}
-		}
-		if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) || 
-			((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x )){
-			if (target.GetComponent<PlayerControl> ().canBeHit && dead == false) {
-				target.GetComponent<PlayerControl> ().canBeHit = false;
-				animator.SetInteger ("enemymove", 2);
-				StartCoroutine (timer ());
-			}
-
-
 		}
 
 		if (hp <= 0) {
@@ -135,15 +149,15 @@ public class MeeleControl : MonoBehaviour {
 	{
 		Vector3 curr = tr.position;
 		print ("attack");
-		target.GetComponent<PlayerControl> ().damaged (10);
-
+		target.GetComponent<PlayerControl> ().damaged (30);
 
 	}
 
 	IEnumerator timer() {
 		print(Time.time);
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (1);
 		target.GetComponent<PlayerControl> ().canBeHit = true;
+		//attacking = false;
 		print(Time.time);
 	}
 
