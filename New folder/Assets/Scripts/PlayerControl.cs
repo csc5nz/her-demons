@@ -262,10 +262,10 @@ public class PlayerControl : MonoBehaviour {
 	private void drink(){
 		if (hpPotion > 0) {
 			hpPotion -= 1;
-			if (health >= 50) {
+			if (health >= 70) {
 				health = 100;
 			} else {
-				health += 50;
+				health += 30;
 			}
 			healthBar.fillAmount = health / 100f;
 			potionText.text = "" + hpPotion;
