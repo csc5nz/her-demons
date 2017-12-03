@@ -129,7 +129,7 @@ public class MeeleControl : MonoBehaviour {
 					animator.SetInteger ("enemymove", 2);
 					StartCoroutine (timer ());
 				}
-			attacking = true;
+			//attacking = true;
 			}
 		}
 
