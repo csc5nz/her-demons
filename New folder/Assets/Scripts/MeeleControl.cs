@@ -111,7 +111,6 @@ public class MeeleControl : MonoBehaviour {
 				calculatePath (home);
 				chase ();
 			} else if (dist <= chaseDist && dead == false) {
-			
 				calculatePath (playerTransform.position);
 				chase ();
 			
