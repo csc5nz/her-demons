@@ -15,12 +15,14 @@ public class ArcherController : MonoBehaviour {
 	public bool dmgd;
 	public bool dead;
 	public Image healthBar;
+	public AudioSource audio;
 
 	private RaycastHit hit;
 	private int newfaceDirection;
 
 	// Use this for initialization
 	void Start () {
+		audio = GetComponent<AudioSource> ();
 		dead = false;
 		dmgd = false;
 	}
@@ -124,10 +126,12 @@ public class ArcherController : MonoBehaviour {
 	}
 
 	public void getHit() {
+		audio.Play ();
 		hp -= 1;
 		healthBar.fillAmount = hp / 3f;
 		dmgd = true;
 		animator.SetInteger ("alert", 5);
+
 	}
 
 	public void notDmg(){
