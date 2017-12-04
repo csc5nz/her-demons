@@ -60,15 +60,15 @@ public class PlayerControl : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (attacking == false) {
+		if (attacking == false && health > 0) {
 			move ();
 		}
 		
-		if (Input.GetMouseButtonDown (0) && tr.position == pos2 && attacking == false && dmgd == false && (stamina > 30)) {
+		if (Input.GetMouseButtonDown (0) && tr.position == pos2 && attacking == false && dmgd == false && (stamina > 30) && health > 0) {
 			attack ();
 		}
 
-		if (Input.GetKeyDown(KeyCode.Q) && attacking == false && dmgd == false) {
+		if (Input.GetKeyDown(KeyCode.Q) && attacking == false && dmgd == false && health > 0) {
 			drink ();
 		}
 
@@ -83,6 +83,11 @@ public class PlayerControl : MonoBehaviour {
 			stamina += 0.2f;
 		}
 		staminaBar.fillAmount = stamina / 100f;
+
+		if (health <= 0) {
+			animator.SetInteger ("playermove", 4);
+
+		}
 	}
 
 	void attack ()
@@ -249,7 +254,9 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	public void damaged(int dmg, int dir, float xval, float zval){ // damaged by archers
-		audio.Play();
+		if (health > 0) {
+			audio.Play();
+		}
 		stop = true;
 		dmgd = true;
 		animator.SetInteger ("playermove", 3);
@@ -268,7 +275,9 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	public void damaged(int dmg){ // damaged by melee
-		audio.Play();
+		if (health > 0) {
+			audio.Play ();
+		}
 		stop = true;
 		dmgd = true;
 		animator.SetInteger ("playermove", 3);
@@ -441,5 +450,4 @@ public class PlayerControl : MonoBehaviour {
 			stop = true; // while on elevator, player can't issue move commands
 		}
 	}
-
 }
