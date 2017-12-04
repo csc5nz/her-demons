@@ -1444,7 +1444,7 @@ Prefab:
       objectReference: {fileID: 2100000, guid: 8a1660fd52975e247b7c83056fbd108c, type: 2}
     - target: {fileID: 100002, guid: 89d765e77d15bba4091f7e820fe0cbdb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 89d765e77d15bba4091f7e820fe0cbdb, type: 3}
@@ -9673,7 +9673,7 @@ Prefab:
       objectReference: {fileID: 2100000, guid: 8a1660fd52975e247b7c83056fbd108c, type: 2}
     - target: {fileID: 100002, guid: 0962c809cc359754890c52f93e6155b4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0962c809cc359754890c52f93e6155b4, type: 3}
