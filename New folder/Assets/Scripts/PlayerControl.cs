@@ -196,6 +196,12 @@ public class PlayerControl : MonoBehaviour {
 		lever (rightBlocked, hitObjectRight);
 		lever (forwardBlocked, hitObjectForward);
 		lever (backBlocked, hitObjectBack);
+
+		if (leftBlocked && hitObjectLeft.collider.tag == "End") {
+			SceneManager.LoadScene(3);
+		}
+
+
 		if (rightBlocked && hitObjectRight.collider.tag == "elevatordown"){ //elevator activate
 			elevator(hitObjectRight, Vector3.down);
 		}
