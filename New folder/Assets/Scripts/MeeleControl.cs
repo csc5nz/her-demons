@@ -122,14 +122,16 @@ public class MeeleControl : MonoBehaviour {
 			}
 		}
 		if (!attacking) {
-			if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) ||
-			   ((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x)) {
-				if (target.GetComponent<PlayerControl> ().canBeHit && dead == false) {
-					target.GetComponent<PlayerControl> ().canBeHit = false;
-					animator.SetInteger ("enemymove", 2);
-					StartCoroutine (timer ());
+			if (((Mathf.Abs (transform.position.y - target.transform.position.y) <= 2) && transform.position.y == target.transform.position.y)) {
+				if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) ||
+				   ((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x)) {
+					if (target.GetComponent<PlayerControl> ().canBeHit && dead == false) {
+						target.GetComponent<PlayerControl> ().canBeHit = false;
+						animator.SetInteger ("enemymove", 2);
+						StartCoroutine (timer ());
+					}
+					//attacking = true;
 				}
-			//attacking = true;
 			}
 		}
 
