@@ -51,6 +51,7 @@ public class MeeleControl : MonoBehaviour {
 //	public GameObject homePrefab;
 //	private GameObject homeInstance;
 
+
 	// Use this for initialization
 	void Start () {
 		pos = transform.position;
@@ -77,6 +78,8 @@ public class MeeleControl : MonoBehaviour {
 		colliderPrevBlock = Instantiate(colliderPrefab);
 
 
+
+
 	}
 
 	// Update is called once per frame
@@ -94,6 +97,8 @@ public class MeeleControl : MonoBehaviour {
 //
 //			navDirection = navPath.corners [1];
 //		//print("navDirection: " + navDirection);
+
+		
 
 		float dist = Vector3.Distance (playerTransform.position, transform.position);
 		float distHome = Vector3.Distance (home, transform.position);
@@ -114,14 +119,13 @@ public class MeeleControl : MonoBehaviour {
 			} else if (dist > chaseDist && dead == false) {
 				calculatePath (home);
 				chase ();
-			} 
+			}
 		}
 		if (!attacking) {
 			if (((Mathf.Abs (transform.position.y - target.transform.position.y) <= 2) && transform.position.y == target.transform.position.y)) {
 				if (((Mathf.Abs (transform.position.x - target.transform.position.x) <= 2) && transform.position.z == target.transform.position.z) ||
 				   ((Mathf.Abs (transform.position.z - target.transform.position.z) <= 2) && transform.position.x == target.transform.position.x)) {
 					if (target.GetComponent<PlayerControl> ().canBeHit && dead == false) {
-						//attacking = true;
 						target.GetComponent<PlayerControl> ().canBeHit = false;
 						animator.SetInteger ("enemymove", 2);
 						StartCoroutine (timer ());
@@ -146,23 +150,7 @@ public class MeeleControl : MonoBehaviour {
 	{
 		Vector3 curr = tr.position;
 		print ("attack");
-		if (faceDirection == 0) { //forward
-			if (playerTransform.position.x == transform.position.x + 2.0f && Mathf.Abs (transform.position.z - target.transform.position.z) <= 1.3f) {
-				target.GetComponent<PlayerControl> ().damaged (30);
-			}
-		} else if (faceDirection == 1) { //left
-			if (playerTransform.position.z == transform.position.z + 2.0f && Mathf.Abs (transform.position.x - target.transform.position.x) <= 1.3f) {
-				target.GetComponent<PlayerControl> ().damaged (30);
-			}
-		} else if (faceDirection == 2) { //backward
-			if (playerTransform.position.x == transform.position.x - 2.0f && Mathf.Abs (transform.position.z - target.transform.position.z) <= 1.3f) {
-				target.GetComponent<PlayerControl> ().damaged (30);
-			}
-		} else if (faceDirection == 3) { // right
-			if (playerTransform.position.z == transform.position.z - 2.0f && Mathf.Abs (transform.position.x - target.transform.position.x) <= 1.3f) {
-				target.GetComponent<PlayerControl> ().damaged (30);
-			}
-		}
+		target.GetComponent<PlayerControl> ().damaged (30);
 
 	}
 
@@ -410,11 +398,4 @@ public class MeeleControl : MonoBehaviour {
 		Destroy(colliderPrevBlock);
 	}
 
-	public void cantMove(){
-		attacking = true;
-	}
-
-	public void canMove(){
-		attacking = false;
-	}
 }
