@@ -161,6 +161,8 @@ public class PlayerControl : MonoBehaviour {
 				hit.collider.gameObject.GetComponent<MeeleControl> ().getHit ();
 			} else if (hit.collider.gameObject.tag == "archer") {
 				hit.collider.gameObject.GetComponent<ArcherController> ().getHit ();
+			} else if (hit.collider.gameObject.tag == "miniboss") {
+				hit.collider.gameObject.GetComponent<MinibossControl> ().getHit ();
 			}
 		} else {
 			print ("Miss!");
