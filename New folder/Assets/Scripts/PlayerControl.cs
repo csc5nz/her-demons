@@ -24,6 +24,12 @@ public class PlayerControl : MonoBehaviour {
 	public Canvas PauseMenu;
 	public Canvas Controls;
 
+	public GameObject miniboss;
+	public GameObject wall1;
+	public GameObject wall2;
+	private GameObject wall1inst;
+	private GameObject wall2inst;
+
 	private Vector3 orig;
 	private Vector3 pos;
 	public Vector3 pos2;
@@ -106,6 +112,11 @@ public class PlayerControl : MonoBehaviour {
 		if (health <= 0) {
 			animator.SetInteger ("playermove", 4);
 
+		}
+
+		if (miniboss.GetComponent<MinibossControl> ().hp <= 0) {
+			wall1inst.SetActive(false);
+			wall2inst.SetActive(false);
 		}
 	}
 
@@ -198,8 +209,14 @@ public class PlayerControl : MonoBehaviour {
 		lever (backBlocked, hitObjectBack);
 
 		if (leftBlocked && hitObjectLeft.collider.tag == "End") {
-			print ("HI");
 			SceneManager.LoadScene(3);
+		}
+
+		if (forwardBlocked && hitObjectForward.collider.tag == "Boss") {
+			print ("boss");
+			hitObjectForward.collider.gameObject.SetActive (false);
+			wall1inst = Instantiate (wall1);
+			wall2inst = Instantiate (wall2);
 		}
 
 

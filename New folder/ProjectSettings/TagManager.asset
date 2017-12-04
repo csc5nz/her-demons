@@ -14,6 +14,7 @@ TagManager:
   - archer
   - miniboss
   - End
+  - Boss
   layers:
   - Default
   - TransparentFX
