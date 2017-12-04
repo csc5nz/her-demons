@@ -5,6 +5,7 @@ using UnityEngine;
 public class Visibility : MonoBehaviour {
 
 	public GameObject player;
+	public float alphalevel;
 
 	private bool skip1;
 	private bool skip2;
@@ -36,7 +37,7 @@ public class Visibility : MonoBehaviour {
 			if (hitObject.collider.gameObject == this.gameObject){
 				this.gameObject.GetComponent<Renderer> ().material.shader = Shader.Find ("Transparent/Diffuse");
 				Color tempColor = this.gameObject.GetComponent<Renderer> ().material.color;
-				tempColor.a = 0.3F;
+				tempColor.a = alphalevel;
 				this.gameObject.GetComponent<Renderer> ().material.color = tempColor;
 				skip1 = true;
 			}
@@ -46,7 +47,7 @@ public class Visibility : MonoBehaviour {
 			if (hitObject2.collider.gameObject == this.gameObject){
 				this.gameObject.GetComponent<Renderer> ().material.shader = Shader.Find ("Transparent/Diffuse");
 				Color tempColor = this.gameObject.GetComponent<Renderer> ().material.color;
-				tempColor.a = 0.3F;
+				tempColor.a = alphalevel;
 				this.gameObject.GetComponent<Renderer> ().material.color = tempColor;
 				skip2 = true;
 			} 
@@ -55,7 +56,7 @@ public class Visibility : MonoBehaviour {
 			if (hitObject3.collider.gameObject == this.gameObject){
 				this.gameObject.GetComponent<Renderer> ().material.shader = Shader.Find ("Transparent/Diffuse");
 				Color tempColor = this.gameObject.GetComponent<Renderer> ().material.color;
-				tempColor.a = 0.3F;
+				tempColor.a = alphalevel;
 				this.gameObject.GetComponent<Renderer> ().material.color = tempColor;
 				skip3 = true;
 			} 
@@ -66,5 +67,6 @@ public class Visibility : MonoBehaviour {
 			tempColor.a = 1.0F;
 			this.gameObject.GetComponent<Renderer> ().material.color = tempColor;
 		}
+			
 	}
 }

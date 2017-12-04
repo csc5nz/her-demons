@@ -27,8 +27,6 @@ public class PlayerControl : MonoBehaviour {
 	private Transform tr;
 	private int faceDirection; 
 	private int newfaceDirection;
-	private bool dead;
-
 
 	public LayerMask blockingLayer;	
 
@@ -39,7 +37,6 @@ public class PlayerControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		dead = false;
 		pos = transform.position;
 		pos2 = pos;
 		tr = transform;
@@ -61,15 +58,15 @@ public class PlayerControl : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (attacking == false && !dead) {
+		if (attacking == false) {
 			move ();
 		}
 		
-		if (Input.GetMouseButtonDown (0) && tr.position == pos2 && attacking == false && dmgd == false && (stamina > 30) && !dead) {
+		if (Input.GetMouseButtonDown (0) && tr.position == pos2 && attacking == false && dmgd == false && (stamina > 30)) {
 			attack ();
 		}
 
-		if (Input.GetKeyDown(KeyCode.Q) && attacking == false && dmgd == false && !dead) {
+		if (Input.GetKeyDown(KeyCode.Q) && attacking == false && dmgd == false) {
 			drink ();
 		}
 
@@ -80,15 +77,10 @@ public class PlayerControl : MonoBehaviour {
 			potionimage.GetComponent<MeshRenderer> ().enabled = true;
 
 		}
-		if (stamina < 100 && !attacking && !dead) {
+		if (stamina < 100 && !attacking) {
 			stamina += 0.2f;
 		}
 		staminaBar.fillAmount = stamina / 100f;
-
-		if (health <= 0) {
-			dead = true;
-			SceneManager.LoadScene ("DeathScreen");
-		}
 	}
 
 	void attack ()

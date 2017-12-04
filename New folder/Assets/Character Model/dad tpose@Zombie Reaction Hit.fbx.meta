@@ -151,7 +151,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.9971264
+      - time: 0.921177
         functionName: notDmg
         data: 
         objectReferenceParameter: {instanceID: 0}

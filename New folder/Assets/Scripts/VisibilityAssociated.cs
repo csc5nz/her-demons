@@ -16,13 +16,13 @@ public class VisibilityAssociated : MonoBehaviour {
 		if (vis.GetComponent<Renderer> ().material.shader == Shader.Find ("Transparent/Diffuse")) {
 			this.gameObject.GetComponent<Renderer> ().material.shader = Shader.Find ("Transparent/Diffuse");
 			Color tempColor = this.gameObject.GetComponent<Renderer> ().material.color;
-			tempColor.a = 0.3F;
+			tempColor.a = 0.1F;
 			this.gameObject.GetComponent<Renderer> ().material.color = tempColor;
 		}
 		if (vis.GetComponent<Renderer> ().material.shader == Shader.Find ("Standard")) {
 			this.gameObject.GetComponent<Renderer> ().material.shader = Shader.Find ("Standard");
 			Color tempColor = this.gameObject.GetComponent<Renderer> ().material.color;
-			tempColor.a = 0.3F;
+			tempColor.a = 0.1F;
 			this.gameObject.GetComponent<Renderer> ().material.color = tempColor;
 		}
 	}
