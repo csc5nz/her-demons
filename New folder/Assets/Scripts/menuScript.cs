@@ -11,6 +11,7 @@ public class menuScript : MonoBehaviour {
 	public Button credits;
 	public Button exit;
 	public Canvas ctrlscreen;
+	public Canvas creditscreen;
 	public Button back;
 	public AudioSource audio;
 
@@ -20,6 +21,9 @@ public class menuScript : MonoBehaviour {
 		ctrlscreen.GetComponent<Canvas>();
 		ctrlscreen.enabled = false;
 
+		creditscreen.GetComponent<Canvas>();
+		creditscreen.enabled = false;
+
 		start = start.GetComponent<Button> ();
 		start.onClick.AddListener (StartGame);
 
@@ -27,6 +31,7 @@ public class menuScript : MonoBehaviour {
 		controls.onClick.AddListener (ControlScreen);
 
 		credits = credits.GetComponent<Button> ();
+		credits.onClick.AddListener (ToCredits);
 
 		exit = exit.GetComponent<Button> ();
 		exit.onClick.AddListener (ExitGame);
@@ -53,6 +58,15 @@ public class menuScript : MonoBehaviour {
 	}
 
 	public void backtomenu() {
-		ctrlscreen.enabled = false;
+		print ("hi");
+		if (ctrlscreen.enabled) {
+			ctrlscreen.enabled = false;
+		} else if (creditscreen.enabled) {
+			creditscreen.enabled = false;
+		}
+	}
+
+	public void ToCredits() {
+		creditscreen.enabled = true;
 	}
 }
