@@ -14,7 +14,6 @@ public class MeeleControl : MonoBehaviour {
 	public bool stop;
 	public Image healthBar;
 	public AudioSource audio;
-	public AudioSource DyingSound;
 
 	private Vector3 pos;
 	private Vector3 pos2;
@@ -56,7 +55,6 @@ public class MeeleControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		audio = GetComponent<AudioSource> ();
-		DyingSound = DyingSound.GetComponent<AudioSource> ();
 		pos = transform.position;
 		pos2 = pos;
 		home = pos;
@@ -423,9 +421,5 @@ public class MeeleControl : MonoBehaviour {
 
 	public void canMove(){
 		attacking = false;
-	}
-
-	public void playDyingSound() {
-		DyingSound.Play ();
 	}
 }
