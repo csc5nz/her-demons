@@ -2195,7 +2195,7 @@ MonoBehaviour:
   walkspeed: 3
   runspeed: 6
   animator: {fileID: 521221253}
-  hp: 5
+  hp: 4
   dmg: 0
   attacking: 0
   stop: 0
@@ -5902,7 +5902,7 @@ MonoBehaviour:
   walkspeed: 3
   runspeed: 6
   animator: {fileID: 1277872039}
-  hp: 5
+  hp: 6
   dmg: 0
   attacking: 0
   stop: 0
@@ -9816,7 +9816,7 @@ MonoBehaviour:
   walkspeed: 3
   runspeed: 6
   animator: {fileID: 1932989588}
-  hp: 5
+  hp: 4
   dmg: 0
   attacking: 0
   stop: 0
