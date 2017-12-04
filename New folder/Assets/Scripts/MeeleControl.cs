@@ -145,7 +145,7 @@ public class MeeleControl : MonoBehaviour {
 	public void getHit() {
 		audio.Play ();
 		hp -= 1;
-		healthBar.fillAmount = hp / 5f;
+		healthBar.fillAmount = hp / 3f;
 	}
 
 	private void attack ()
