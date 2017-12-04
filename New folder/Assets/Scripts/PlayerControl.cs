@@ -28,6 +28,7 @@ public class PlayerControl : MonoBehaviour {
 	private int faceDirection; 
 	private int newfaceDirection;
 
+	public AudioSource audio;
 	public LayerMask blockingLayer;	
 
 	//collider that occupy 2 blocks
@@ -37,6 +38,7 @@ public class PlayerControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		audio = GetComponent<AudioSource> ();
 		pos = transform.position;
 		pos2 = pos;
 		tr = transform;
@@ -247,6 +249,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	public void damaged(int dmg, int dir, float xval, float zval){ // damaged by archers
+		audio.Play();
 		stop = true;
 		dmgd = true;
 		animator.SetInteger ("playermove", 3);
@@ -265,6 +268,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	public void damaged(int dmg){ // damaged by melee
+		audio.Play();
 		stop = true;
 		dmgd = true;
 		animator.SetInteger ("playermove", 3);
