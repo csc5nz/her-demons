@@ -21,12 +21,16 @@ public class PlayerControl : MonoBehaviour {
 	public GameObject potionimage;
 	public Text potionText;
 
+	public Canvas PauseMenu;
+	public Canvas Controls;
+
 	private Vector3 orig;
 	private Vector3 pos;
 	public Vector3 pos2;
 	private Transform tr;
 	private int faceDirection; 
 	private int newfaceDirection;
+	private bool paused;
 
 	public AudioSource audio;
 	public LayerMask blockingLayer;	
@@ -38,7 +42,12 @@ public class PlayerControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Time.timeScale = 1;
 		audio = GetComponent<AudioSource> ();
+		PauseMenu = PauseMenu.GetComponent<Canvas> ();
+		PauseMenu.enabled = false;
+		Controls = Controls.GetComponent<Canvas> ();
+		Controls.enabled = false;
 		pos = transform.position;
 		pos2 = pos;
 		tr = transform;
@@ -60,6 +69,16 @@ public class PlayerControl : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			if (paused) {
+				Time.timeScale = 1;
+				PauseMenu.enabled = false;
+			} else if (!paused) {
+				Time.timeScale = 0;
+				PauseMenu.enabled = true;
+			}
+			paused = !paused;
+		}
 		if (attacking == false && health > 0) {
 			move ();
 		}
