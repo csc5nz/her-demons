@@ -12,9 +12,11 @@ public class menuScript : MonoBehaviour {
 	public Button exit;
 	public Canvas ctrlscreen;
 	public Button back;
+	public AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
+
 		ctrlscreen.GetComponent<Canvas>();
 		ctrlscreen.enabled = false;
 
