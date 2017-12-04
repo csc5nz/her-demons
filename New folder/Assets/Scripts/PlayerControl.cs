@@ -247,15 +247,6 @@ public class PlayerControl : MonoBehaviour {
 			newfaceDirection = 2;
 			orig = tr.transform.position;
 		}
-	
-		if (Input.GetKey (KeyCode.P) && tr.position == pos) { //temporary vertical up
-			pos += 4 * Vector3.up;
-			pos2 = pos;
-		}
-		if (Input.GetKey (KeyCode.O) && tr.position == pos) { // temporary vertical down
-			pos += 4 * Vector3.down;
-			pos2 = pos;
-		}
 
 		moveNormal();
 

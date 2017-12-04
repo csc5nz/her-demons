@@ -26,13 +26,11 @@ public class MiniBossParticles : MonoBehaviour {
 	void Update () {
 		//print("prev" + prevHpPotion);
 		//print("hp" + miniboss.GetComponent<MinibossControl>().hpPotion);
-		int curAnimatorInt = miniboss.GetComponent<MinibossControl>().animator.GetInteger("enemymove");
-		if (curAnimatorInt != prevAnimatorInt && curAnimatorInt == 4) {
+		if (miniboss.GetComponent<MinibossControl>().particles == false) {
 			print("if statement");
 			StartCoroutine(attackEffect());
 			//prevHpPotion = player.GetComponent<PlayerControl> ().hpPotion;
 		}
-		prevAnimatorInt = curAnimatorInt;
 	}
 
 	IEnumerator attackEffect() {
