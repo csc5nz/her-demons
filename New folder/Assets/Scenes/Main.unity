@@ -2945,6 +2945,11 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114399174741270564, guid: 91edfe5ad7f74d74e8d0a621d796e763,
+        type: 2}
+      propertyPath: ControlScreen
+      value: 
+      objectReference: {fileID: 413033200}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 91edfe5ad7f74d74e8d0a621d796e763, type: 2}
   m_IsPrefabParent: 0
