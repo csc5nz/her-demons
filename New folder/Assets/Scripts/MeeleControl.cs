@@ -13,7 +13,6 @@ public class MeeleControl : MonoBehaviour {
 	public bool attacking;
 	public bool stop;
 	public Image healthBar;
-	public AudioSource audio;
 
 	private Vector3 pos;
 	private Vector3 pos2;
@@ -54,7 +53,6 @@ public class MeeleControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		audio = GetComponent<AudioSource> ();
 		pos = transform.position;
 		pos2 = pos;
 		home = pos;
@@ -136,13 +134,9 @@ public class MeeleControl : MonoBehaviour {
 			animator.SetInteger ("enemymove", 3);
 			dead = true;
 		}
-		if (dead == true) {
-
-		}
 	}
 
 	public void getHit() {
-		audio.Play ();
 		hp -= 1;
 		healthBar.fillAmount = hp / 5f;
 	}

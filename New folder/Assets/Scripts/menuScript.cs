@@ -13,11 +13,9 @@ public class menuScript : MonoBehaviour {
 	public Canvas ctrlscreen;
 	public Canvas creditscreen;
 	public Button back;
-	public AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
-
 		ctrlscreen.GetComponent<Canvas>();
 		ctrlscreen.enabled = false;
 
