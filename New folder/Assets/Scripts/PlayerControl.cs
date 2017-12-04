@@ -198,6 +198,7 @@ public class PlayerControl : MonoBehaviour {
 		lever (backBlocked, hitObjectBack);
 
 		if (leftBlocked && hitObjectLeft.collider.tag == "End") {
+			print ("HI");
 			SceneManager.LoadScene(3);
 		}
 
