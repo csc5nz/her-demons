@@ -32,8 +32,6 @@ public class MeeleControl : MonoBehaviour {
 	//navmesh
 	public Transform playerTransform;
 	private  UnityEngine.AI.NavMeshPath navPath;
-	private  UnityEngine.AI.NavMeshPath navPathPlayer;
-	private  UnityEngine.AI.NavMeshPath navPathHome;
 	private float elapsed = 0.0f;
 	private Vector3 navDirection;
 
@@ -41,6 +39,7 @@ public class MeeleControl : MonoBehaviour {
 	public float fieldOfView;
 	public float goHomeDistance;
 	public float gridDist;
+	public Transform navHome;
 	public bool dead;
 
 	//collider that occupy 2 blocks
@@ -163,26 +162,18 @@ public class MeeleControl : MonoBehaviour {
 		print(Time.time);
 	}
 
-	public bool calculatePath (Vector3 target)
+	public void calculatePath (Vector3 target)
 	{
-		UnityEngine.AI.NavMeshPath navPath;
 		elapsed += Time.deltaTime;
 		if (elapsed > 1.0f) {
 			elapsed -= 1.0f;
 			UnityEngine.AI.NavMesh.CalculatePath (transform.position, target, UnityEngine.AI.NavMesh.AllAreas, navPath);
 		}
-		for (int i = 0; i < navPath.corners.Length - 1; i++) {
+		for (int i = 0; i < navPath.corners.Length - 1; i++)
 			Debug.DrawLine (navPath.corners [i], navPath.corners [i + 1], Color.red);		
-		}
 
-		if (navPath.corners.Length > 1) {
+		if (navPath.corners.Length > 0)
 			navDirection = navPath.corners [1];	
-			print(navPath.status);
-			return navPath;
-		}	
-		
-		print(navPath.status);
-		return null;
 	}
 
 	public void chase ()
