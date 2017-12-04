@@ -12,6 +12,7 @@ TagManager:
   - floor
   - melee
   - archer
+  - miniboss
   layers:
   - Default
   - TransparentFX
