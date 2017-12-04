@@ -12,7 +12,6 @@ public class menuScript : MonoBehaviour {
 	public Button exit;
 	public Canvas ctrlscreen;
 	public Canvas creditscreen;
-	public Button back;
 	public AudioSource audio;
 
 	// Use this for initialization
@@ -36,8 +35,6 @@ public class menuScript : MonoBehaviour {
 		exit = exit.GetComponent<Button> ();
 		exit.onClick.AddListener (ExitGame);
 
-		back = back.GetComponent<Button> ();
-		back.onClick.AddListener (backtomenu);
 	}
 	
 	// Update is called once per frame
@@ -56,15 +53,7 @@ public class menuScript : MonoBehaviour {
 	public void ExitGame() {
 		Application.Quit ();
 	}
-
-	public void backtomenu() {
-		print ("hi");
-		if (ctrlscreen.enabled) {
-			ctrlscreen.enabled = false;
-		} else if (creditscreen.enabled) {
-			creditscreen.enabled = false;
-		}
-	}
+		
 
 	public void ToCredits() {
 		creditscreen.enabled = true;
